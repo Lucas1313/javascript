@@ -27,36 +27,36 @@
 			// Here we go...
 
 			$('.playVideo').youtubewrapper({
-				targetId : 'videoPlayer',  	// the id of the div where the video will play
-				height : videoHeight, 		// height
-				width : videoWidth, 		// width
-				videoId : 'data-videoid', 	// The html-5 tag that will contain the video ID
+				targetId : 'videoPlayer',   // the id of the div where the video will play
+				height : videoHeight,       // height
+				width : videoWidth,         // width
+				videoId : 'data-videoid',   // The html-5 tag that will contain the video ID
 				wmode : 'transparent',
-				modestbranding : 1, 		// if set to 1 will hide the big Youtube Icon
-				rel : 0, 					// Values: 0 or 1. Default is 1. indicates whether the player should show related videos when playback ends.
-				showinfo : 0, 				// Values: 0 or 1. Default is 1 showinfo and playlist
+				modestbranding : 1,         // if set to 1 will hide the big Youtube Icon
+				rel : 0,                    // Values: 0 or 1. Default is 1. indicates whether the player should show related videos when playback ends.
+				showinfo : 0,               // Values: 0 or 1. Default is 1 showinfo and playlist
 				dataLayerEventName : 'Clorox Video click event',  // Google tagging
 				events : {
 					'onStateChange' :
 					// User defined call back function on Player State Change e=event information, args = Plugin parameters
 					function(e,args) {
-						//console.info('Youtube Video state changed '+e.data);
-						//console.info(args);
-						//console.info(e);
+						////console.info('Youtube Video state changed '+e.data);
+						////console.info(args);
+						////console.info(e);
 					},
 					'onReady':
 					// User defined callback on apiReady
 					function(e,args){
-						//console.info('Youtube API ready ')
-						//console.info(args);
-						//console.info(e)
+						////console.info('Youtube API ready ')
+						////console.info(args);
+						////console.info(e)
 					}
 				},
 				afterClick :
 				// User defined callback function triggered by clicking on the Thumbnails
 				function(eventTarget, args) {
 
-					//console.info('AfterClick functions running');
+					////console.info('AfterClick functions running');
 
 				}
 			});
@@ -90,9 +90,10 @@ var player;
 
 function onYouTubeIframeAPIReady2() {
 
-	$(window).trigger('goYoutubePlugin');
-	youtubeVariables.youtubeIsReady = true;
+	if(youtubeVariables.youtubeIsReady == false){
+		$(window).trigger('goYoutubePlugin');
 
+	}
 }
 
 /**
@@ -118,8 +119,8 @@ function onYouTubeIframeAPIReady2() {
 		$('script').each(function() {
 
 			if ($(this).attr('src')) {
-				//console.log($(this).attr('src'))
-				fund = $(this).attr('src').match(src);
+				//////console.log($(this).attr('src'))
+				found = $(this).attr('src').match(src);
 			}
 
 		});
@@ -160,6 +161,7 @@ function onYouTubeIframeAPIReady2() {
 
 		//Iterate trough all elements set by the plugin
 		return this.each(function() {
+			////console.log('iteration from youtube wrapper')
 			youtubeVariables.triggerClass = $(this).attr('class');
 			setId(this);
 			setListeners(this, defaults);
@@ -169,13 +171,15 @@ function onYouTubeIframeAPIReady2() {
 		/**
 		 * function setId
 		 * Definition will set an Id on the target if there is none
- 		 * @param {Object} target
+		 * @param {Object} target
 		 */
 		function setId(target){
+
 			if(! $(target).attr('id')){
 				++youtubeVariables.youtubeIterator;
 				$(target).attr('id', 'jQueryYoutube'+youtubeVariables.youtubeIterator);
 			}
+			////console.log('setting id '+youtubeVariables.youtubeIterator)
 		}
 
 		/**
@@ -188,12 +192,13 @@ function onYouTubeIframeAPIReady2() {
 
 			id = $(obj).attr('id');
 
-			$('#' + id).click(function() {
-				console.info('Click on youtube icon')
+			$('body').on('click','#' + id,function() {
+				//console.info('Clicked on youtube Trigger '+id)
 				args.autoplay = 1;
+				 debugger;
 				if($(this).attr('data-playerid')){
 					args.targetId = $(this).attr('data-playerid');
-					console.info($(this).attr('data-playerid'));
+					////console.info($(this).attr('data-playerid'));
 				}
 
 				if($(this).attr('data-preimage')){
@@ -215,7 +220,7 @@ function onYouTubeIframeAPIReady2() {
 
 				// Hiding will fix IE 8 black screen bug
 				$('#' + defaults.targetId).hide();
-console.info('defaults.targetId='+defaults.targetId);
+////console.info('defaults.targetId='+defaults.targetId);
 				var newVideoFrame = '<div id="' + defaults.targetId + '"></div>';
 				$('#' + defaults.targetId).replaceWith(newVideoFrame);
 				setEvents(this, args);
@@ -233,21 +238,19 @@ console.info('defaults.targetId='+defaults.targetId);
 		 */
 		function setEvents(caller, args) {
 
-			var args = args;
 			if (!youtubeVariables.youtubeIsReady) {
 
-				console.info('BINDING EVENTS')
+				//console.info('BINDING youtube EVENTS')
 
 				$(window).bind('goYoutubePlugin', function(e) {
-					console.info('goYoutubePlugin EVENTS')
+					//console.info('goYoutubePlugin EVENTS')
 					executeOnReadyCallBacks(args);
 					setVideoPlayer(null,args);
-
+					youtubeVariables.youtubeIsReady = true;
 				});
 
 			}
 			else {
-				//console.info('already set running')
 				setVideoPlayer($(caller).attr(args.videoId),args);
 			}
 		}
@@ -255,7 +258,7 @@ console.info('defaults.targetId='+defaults.targetId);
 		/**
 		 * function executeOnReadyCallBacks(args)
 		 * User defined callback events
- 		 * @param {Object} args
+		 * @param {Object} args
 		 */
 		function executeOnReadyCallBacks(args){
 			if(args.events && args.events.onReady){
@@ -275,7 +278,7 @@ console.info('defaults.targetId='+defaults.targetId);
 		 * @param {Object} args
 		 */
 		function setVideoPlayer(videoId,args) {
-			console.info('video id is '+videoId)
+			////console.info('video id is '+videoId)
 			// get the video id
 
 			if (!videoId ) {
@@ -283,8 +286,11 @@ console.info('defaults.targetId='+defaults.targetId);
 			}
 			youtubeVariables.actualPlayer.playingVideoId = videoId;
 			youtubeVariables.actualPlayer.id = args.targetId;
-			//console.info('PLAYING '+videoId)
+			////console.info('PLAYING '+videoId)
 			// setup the player
+			if(typeof YT == 'undefined'){
+				return;
+			}
 			youtubeVariables.player = new YT.Player(args.targetId, // the player
 				{
 					height : args.height, // video height
@@ -301,10 +307,11 @@ console.info('defaults.targetId='+defaults.targetId);
 					'onStateChange' : function(e){ // triggered whenever the player plays, stops pause etc
 
 						onPlayerStateChange(e,args) // Plugin
-						if(args.events.onStateChange){
+						if(args.events.onStateChange) {
 							args.events.onStateChange(e,args); // User defined callback
 						}
-					}
+					},
+					'onReady': onPlayerReady,
 				}
 			});
 
@@ -318,7 +325,7 @@ console.info('defaults.targetId='+defaults.targetId);
 		/**
 		 * function onPlayerStateChange
 		 * Description: Respond to the player state change event
- 		 * @param {Object} event
+		 * @param {Object} event
 		 */
 		function onPlayerStateChange(event) {
 			if(!event){
@@ -336,8 +343,10 @@ console.info('defaults.targetId='+defaults.targetId);
 
 				done = true;
 			} else if (event.data == YT.PlayerState.ENDED) {
+				//console.log('VIDEO ENDED '+args.postImage+'  '+$(args.postImage).length)
 				// video is over test if there is a post image to show
 				if ($(args.postImage).length > 0) {
+					//console.log('showing post image')
 					$(args.postImage).fadeIn(1000);
 					$(args.dialogId).dialog("destroy");
 				}
@@ -369,6 +378,11 @@ console.info('defaults.targetId='+defaults.targetId);
 
 		}
 
+		function onPlayerReady(event){
+			//console.log('PLAYER IS READY ')
+			player = event.target;
+
+		}
 		/**
 		 * function addTag
 		 * Description: If the youtube api script is not loaded, loads it. if it is already loaded
@@ -376,11 +390,11 @@ console.info('defaults.targetId='+defaults.targetId);
 		 */
 
 		function addTag() {
-			console.info('youtubeVariables  '+youtubeVariables.youtubeIsReady);
+			//console.info('youtubeVariables  '+youtubeVariables.youtubeIsReady);
 			if (!youtubeVariables.youtubeIsReady) {
-				console.info('ADDING YOUTUBE TAGS ')
+				//console.info('ADDING YOUTUBE TAGS ')
 				$.getScript(src, function(){
-					fund = true;
+					found = true;
 				})
 				var tag = document.createElement('script');
 				tag.src = src;
