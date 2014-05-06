@@ -1,0 +1,129 @@
+<?php
+/*
+ * UseFor extends DataObject
+ *
+ * Describes the Model for a UseFor Object
+ *
+ * @author Luc Martin lmartin -at- clorox.com
+ * @version $Id$
+ *
+ * Relationships:
+ * HasOne = Product
+ * HasMany = UseInRooms
+ * many-many =
+ * belong-many-many =
+ *
+ */
+class UseFor extends DataObject {
+    static $db = array(
+
+        'Name' => 'Text',
+        'Code_Name' => 'Text',
+        'Display_Name' => 'Text',
+        'ProductName' => 'Text',
+        'newIdSet' => 'Boolean'
+    );
+
+    static $has_one = array(
+        'Product' => 'Product',
+        'OurHistoryPage' => 'OurHistoryPage'
+    );
+
+    static $belong_many_many = array('Product' => 'Product');
+
+    static $many_many = array('UseInRooms' => 'UseInRoom');
+
+    public static $summary_fields = array(
+        'ID' => 'ID',
+        'ProductName' => 'ProductName',
+        'Name' => 'Name',
+        'Display_Name' => 'Display_Name'
+    );
+
+    public function getCMSFields() {
+
+        $allUseFor = UseFor::get();
+
+        foreach ($allUseFor as $key => $useFor) {
+
+
+            $useFor -> ProductName = $useFor -> Product() -> Display_Name;
+            $useFor -> write();
+
+
+
+            $useFor -> Name = $useFor -> Display_Name  . ' Product-' . htmlspecialchars($useFor -> ProductName) . ' ID-' . $useFor -> ID;
+            $useFor -> newIdSet = true;
+            $useFor -> write();
+
+
+            $allUseInRoom = $useFor -> UseInRooms();
+
+            foreach ($allUseInRoom as $key => $useInRoom) {
+
+                $useInRoom -> ProductName = $useFor -> ProductName;
+
+                $useInRoom -> Name = $useInRoom -> Display_Name . ' Product-' . htmlspecialchars($useFor -> ProductName) . ' UseFor-' . $useFor -> Display_Name. ' ID-' . $useInRoom -> ID ;
+
+                $useInRoom -> write();
+            }
+
+        }
+
+        $fields = parent::getCMSFields();
+
+        $fields -> removeFieldsFromTab('Root', array('UseInRooms'));
+        $fields -> addFieldToTab('Root.Main', new TextField('Title'));
+        $fields -> addFieldToTab('Root.Main', new TextField('Name'));
+        $fields -> addFieldToTab('Root.Main', new TextField('Display_Name'));
+        $fields -> addFieldToTab('Root.Main', new LiteralField('Code_Name', '<div id="Code_Name" class="field"><label class="left" for="middleColumn">Code Name</label><div class="middleColumn"><div class="readOnlyText" style="font-weight: bold; font-size: 12px; height: 100%; padding: 8px 0 8px 7px; width: 500px; border: 1px solid #999; border-radius: 5px;">' . $this -> Code_Name . '</div></div></div>'));
+
+        //************************* UseInRooms
+        $conf = GridFieldConfig_RelationEditor::create(30);
+
+        // unlink button
+        $conf -> addComponents(new GridFieldDeleteAction('unlinkrelation'));
+
+        // the grid
+        $UseInRoomsField = new GridField('UseInRooms', 'UseInRooms', $this -> UseInRooms(), $conf);
+        $fields -> addFieldToTab('Root.Main', $UseInRoomsField);
+
+        return $fields;
+    }
+
+    public function onBeforeWrite() {
+
+        $strManipulator = new StringManipulator_Controller();
+
+        if (empty($this -> Display_Name)) {
+            $this -> Display_Name = $this -> Name;
+        }
+
+        if (empty($this -> Title)) {
+            $this -> Title = $this -> Display_Name;
+        }
+
+        $this -> Code_Name = $strManipulator -> generateCodeName($this -> Name);
+
+        parent::onBeforeWrite();
+    }
+
+    public function goodForBathrooms() {
+        $useInBathroom = $this -> UseInRooms() -> filter(array('Display_Name' => 'Bathroom')) -> first();
+        if (!empty($useInBathroom -> Display_Name)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function Code_Name() {
+        $strManipulator = new StringManipulator_Controller();
+        $Code_Name = $strManipulator -> generateCodeName($this -> Code_Name);
+        if ($this -> Code_Name != $Code_Name) {
+            $this -> Code_Name = $Code_Name;
+            $this -> write();
+        }
+        return $this -> Code_Name;
+    }
+
+}

@@ -1,0 +1,22 @@
+<?php
+/*
+ * Class IcktionarySubmitThanksPage
+ *
+ * The thanks page for icktionary 
+ * this shouldn't have it's own class as it is so simple,
+ * but there is no generic page with icktionary components
+ *
+ * @author jason ware jason.ware -at- clorox.com
+ * @version $Id$
+ */
+class IcktionarySubmitThanksPage extends Page {
+
+}
+
+class IcktionarySubmitThanksPage_Controller extends Page_Controller {
+
+    public function init() {
+        parent::init();
+    }
+
+}

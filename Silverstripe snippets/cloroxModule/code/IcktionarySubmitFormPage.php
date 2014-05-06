@@ -1,0 +1,188 @@
+<?php
+/**
+ * IcktionarySubmitFormPage and IcktionarySubmitFormPage_Controller 
+ * Class used to render unique form in template for submitting 
+ * potential new icktionary terms.
+ * 
+ * @author Jason Ware jason.ware -at- clorox.com
+ * @package cloroxModule.code
+ * @version $Id: IcktionarySubmitFormPage.php 20624 2013-03-30 07:22:35Z jware $
+ */
+class IcktionarySubmitFormPage extends Page {
+}
+
+class IcktionarySubmitFormPage_Controller extends Page_Controller {
+    
+    function init() {
+        Requirements::javascript("js/pages/icktionary.js");
+        parent::init();
+                // the validation
+        Requirements::customScript('
+            jQuery(document).ready(function() {
+                jQuery.validator.addMethod("notPlaceholder", function(value, element, param) { return this.optional(element) || value !== param;}, "Please provide a non-default value.");
+                jQuery("#Form_IckSubmitForm").validate({
+                    errorContainer: "#errorBox",
+                    errorLabelContainer: "#errorBox ul",
+                    wrapper: "li",
+                    rules: {
+                        Email: {
+                            required: true,
+                            email: true
+                        },
+                        FirstName: {
+                            required: true
+                        },
+                        TermsOfUse: {
+                            required: true
+                        },
+                        IckWord: {
+                            required: "#yourSituationInput:empty",
+                            notPlaceholder: "30 characters max"
+                        },
+                        Situation: {
+                            required: "#yourIckWordInput:empty",
+                            notPlaceholder: "120 characters max"
+                        }
+                    },
+                    messages: {
+                        Email: "Be sure to enter a valid email address",
+                        FirstName: "Please fill in your name",
+                        TermsOfUse: "Please agree to the terms of use",
+                        IckWord: "Please fill in either an Ick-word or a situation",
+                        Situation: "Please fill in either an Ick-word or a situation"
+                    }
+                });
+            });
+        ');
+    }
+    
+    /**
+     * IckSubmitForm function.
+     * Provide a form to provide user submitted data that will  
+     * then be emailed to the address specified in the cms page
+     * 
+     * @return Object the Ick form data
+     */
+    public function IckSubmitForm() {
+        
+        $firstNameField = TextField::create("FirstName", "First name");
+        $emailField     = EmailField::create("Email", "Email");
+        $ickWordField   = TextField::create("IckWord", "Your Ick-word");
+        $situationField = TextareaField::create("Situation","Your situation");
+        $postNameOption = OptionsetField::create(
+                             "PostName",
+                             "It's OK to post my name if my Ick is picked.",
+                             $source = array(
+                                "yes" => "Yes",
+                                "no" => "No"
+                             ),
+                             $value = "yes"
+                          );
+		$touField       = CheckboxField::create(
+		                      "TermsOfUse", 
+		                      "I have read and agree to the Terms of Use"
+		                  );
+
+
+        // the form
+        $signupForm =  new Form(
+            $this, "IckSubmitForm", 
+            // build one FieldList with the initial form fields
+            // http://doc.silverstripe.org/framework/en/reference/form-field-types
+            new FieldList(
+            
+                // List your fields here
+
+				$firstNameField,
+                $emailField,
+                $ickWordField,
+                $situationField,
+                $postNameOption,
+				$touField
+            
+            ), 
+            // one fieldlist holds the call to the form action (method)
+            // and the text on the signup button
+            new FieldList(
+            
+                // List the action buttons here
+                new FormAction("IckSubmitAction", "Submit")
+
+            ), 
+            // List the required fields
+            new RequiredFields(
+			   "FirstName", "Email", "TermsOfUse"
+            )
+        );
+        
+                
+        return $signupForm;
+    }
+    
+    
+    /**
+     * IckSubmitAction function.
+     * Called when a user submits a new icktionary term
+     * 
+     * @param array $data - the request
+     * @param object $form  - the signup form data 
+     * @return void
+     */	
+    public function IckSubmitAction($data, $form){
+        
+        // kick out CSRF attacks
+        $securityID = Session::get( 'SecurityID' );
+        if( !$securityID || $data['SecurityID'] != $securityID ){ 
+            $this->httpError( 400, "SecurityID doesn't match." );
+        }
+        
+        // what we expect as potential fields sent
+		$allowed = array(
+			'FirstName', 'Email',
+			'IckWord', 'Situation',
+			'PostName', 'TermsOfUse'
+			);
+		
+		// map only these onto a clean array	
+        foreach( $data as $key=>$value ){
+            if( in_array( $key, $allowed ) ){
+                $cleanData[$key] = convert::raw2sql( $data[$key] );   
+            }
+        }
+        
+        $name = $cleanData['FirstName'];
+        $email = $cleanData['Email'];
+        $word = $cleanData['IckWord'];
+        $description = $cleanData['Situation'];
+        if( $cleanData['PostName'] = 'yes' ){
+            $userInfo = 'You may post their name.';
+        }else{
+            $userInfo = 'Please don\'t post their name.';
+        }
+        
+$messageBody = $plain_text = <<<EOD
+$name ($email) submitted a new term
+
+The term is:
+$word
+
+The description is:
+$description
+
+$userInfo
+EOD;
+
+        
+        $mail = new Mail();
+		$mail->setFrom('noreply@clorox.com', 'Ick-tionary Form');
+		$mail->addTo('jason.ware@clorox.com', 'Ick-tionary Admin');
+		$mail->addTo('Janel.Jones@clorox.com ', 'Ick-tionary Admin');
+		//$mail->addTo('luc.martin@clorox.com', 'Ick-tionary Admin');
+		$mail->setSubject("A new Ick-tionary term has been submitted");
+		$mail->setBodyText($messageBody);
+		$mail->send();
+        
+        $this->redirect('/laugh/submit-your-ick/thanks/');
+    }
+
+}

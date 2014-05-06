@@ -1,0 +1,8 @@
+---
+Name: cloroxroutes
+---
+Director:
+  rules:
+    'unsubscribe': 'SubscriptionController'
+    'my-profile': 'MyProfileModify_Controller',
+    'sessionstate/$Action' : 'RegistrationForm_Controller'

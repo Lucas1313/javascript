@@ -1,0 +1,2110 @@
+/*
+* Description: CSS Styles.
+*/
+/**
+* These include the SASS files and output them to a CSS file. All the styles
+* should make a small css file that can be downloaded once and cached to`
+* improve the end user experience. If the outputted file is found to be too
+* large, it can be broken up into smaller files.
+*/
+/* MEDIA QUERIES */
+/*v4.0.2 Dec 2012*/
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+/* line 19, ../../../css/sass/plugins/_boilerplate.scss */
+html,
+button,
+input,
+select,
+textarea {
+  color: #222;
+  -webkit-border-radius: 0;
+}
+
+/* line 24, ../../../css/sass/plugins/_boilerplate.scss */
+body {
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection declarations have to be separate.
+ * Customize the background color to match your design.
+ */
+/* line 35, ../../../css/sass/plugins/_boilerplate.scss */
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/* line 40, ../../../css/sass/plugins/_boilerplate.scss */
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+/* line 49, ../../../css/sass/plugins/_boilerplate.scss */
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+ * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
+/* line 62, ../../../css/sass/plugins/_boilerplate.scss */
+img {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+/* line 70, ../../../css/sass/plugins/_boilerplate.scss */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+/* line 80, ../../../css/sass/plugins/_boilerplate.scss */
+textarea {
+  resize: vertical;
+}
+
+/* ==========================================================================
+   Chrome Frame prompt
+   ========================================================================== */
+/* line 88, ../../../css/sass/plugins/_boilerplate.scss */
+.chromeframe {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+/*
+ * Image replacement
+ */
+/* line 107, ../../../css/sass/plugins/_boilerplate.scss */
+.ir {
+  background-color: transparent;
+  border: 0;
+  overflow: hidden;
+  /* IE 6/7 fallback */
+  *text-indent: -9999px;
+}
+
+/* line 115, ../../../css/sass/plugins/_boilerplate.scss */
+.ir:before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 100%;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+/* line 126, ../../../css/sass/plugins/_boilerplate.scss */
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+/* line 135, ../../../css/sass/plugins/_boilerplate.scss */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+/* line 152, ../../../css/sass/plugins/_boilerplate.scss */
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+/* line 165, ../../../css/sass/plugins/_boilerplate.scss */
+.invisible {
+  visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+/* line 182, ../../../css/sass/plugins/_boilerplate.scss */
+.clearfix:before, .slide .bleachable-moments-slide:before, .slide .bleachable-moments-slide form.momentSubmitForm:before, .slide .ick-slide:before, .slide .video-slide:before, .slide .feature-panel-slide:before,
+.clearfix:after,
+.slide .bleachable-moments-slide:after,
+.slide .bleachable-moments-slide form.momentSubmitForm:after,
+.slide .ick-slide:after,
+.slide .video-slide:after,
+.slide .feature-panel-slide:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+
+/* line 187, ../../../css/sass/plugins/_boilerplate.scss */
+.clearfix:after, .slide .bleachable-moments-slide:after, .slide .bleachable-moments-slide form.momentSubmitForm:after, .slide .ick-slide:after, .slide .video-slide:after, .slide .feature-panel-slide:after {
+  clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+/* line 196, ../../../css/sass/plugins/_boilerplate.scss */
+.clearfix, .slide .bleachable-moments-slide, .slide .bleachable-moments-slide form.momentSubmitForm, .slide .ick-slide, .slide .video-slide, .slide .feature-panel-slide {
+  *zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   Theses examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi) {
+  /* Style adjustments for high resolution devices */
+}
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+@media print {
+  /* line 221, ../../../css/sass/plugins/_boilerplate.scss */
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster: h5bp.com/s */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* line 229, ../../../css/sass/plugins/_boilerplate.scss */
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+
+  /* line 233, ../../../css/sass/plugins/_boilerplate.scss */
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  /* line 237, ../../../css/sass/plugins/_boilerplate.scss */
+  abbr[title]:after {
+    content: " (" attr(title) ")";
+  }
+
+  /*
+   * Don't show links for images, or javascript/internal links
+   */
+  /* line 247, ../../../css/sass/plugins/_boilerplate.scss */
+  .ir a:after,
+  a[href^="javascript:"]:after,
+  a[href^="#"]:after {
+    content: "";
+  }
+
+  /* line 252, ../../../css/sass/plugins/_boilerplate.scss */
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /* line 257, ../../../css/sass/plugins/_boilerplate.scss */
+  thead {
+    display: table-header-group;
+    /* h5bp.com/t */
+  }
+
+  /* line 262, ../../../css/sass/plugins/_boilerplate.scss */
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+
+  /* line 266, ../../../css/sass/plugins/_boilerplate.scss */
+  img {
+    max-width: 100% !important;
+  }
+
+  @page {
+    margin: 0.5cm;
+}
+
+  /* line 276, ../../../css/sass/plugins/_boilerplate.scss */
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* line 282, ../../../css/sass/plugins/_boilerplate.scss */
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+/* normalize.css v1.1.0 | MIT License | git.io/normalize */
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined in IE 6/7/8/9 and Firefox 3.
+ */
+/* line 22, ../../../css/sass/plugins/_normalize.scss */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/**
+ * Correct `inline-block` display not defined in IE 6/7/8/9 and Firefox 3.
+ */
+/* line 32, ../../../css/sass/plugins/_normalize.scss */
+audio,
+canvas,
+video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+/* line 43, ../../../css/sass/plugins/_normalize.scss */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Address styling not present in IE 7/8/9, Firefox 3, and Safari 4.
+ * Known issue: no IE 6 support.
+ */
+/* line 53, ../../../css/sass/plugins/_normalize.scss */
+[hidden] {
+  display: none;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+/**
+ * 1. Correct text resizing oddly in IE 6/7 when body `font-size` is set using
+ *    `em` units.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+/* line 68, ../../../css/sass/plugins/_normalize.scss */
+html {
+  font-size: 100%;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+}
+
+/**
+ * Address `font-family` inconsistency between `textarea` and other form
+ * elements.
+ */
+/* line 83, ../../../css/sass/plugins/_normalize.scss */
+html,
+button,
+input,
+select,
+textarea {
+  font-family: sans-serif;
+}
+
+/**
+ * Address margins handled incorrectly in IE 6/7.
+ */
+/* line 91, ../../../css/sass/plugins/_normalize.scss */
+body {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+/* line 103, ../../../css/sass/plugins/_normalize.scss */
+a:focus {
+  outline: thin dotted;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+/* line 112, ../../../css/sass/plugins/_normalize.scss */
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/**
+ * Address font sizes and margins set differently in IE 6/7.
+ * Address font sizes within `section` and `article` in Firefox 4+, Safari 5,
+ * and Chrome.
+ */
+/* line 126, ../../../css/sass/plugins/_normalize.scss */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* line 131, ../../../css/sass/plugins/_normalize.scss */
+h2 {
+  font-size: 1.5em;
+  margin: 0.83em 0;
+}
+
+/* line 136, ../../../css/sass/plugins/_normalize.scss */
+h3 {
+  font-size: 1.17em;
+  margin: 1em 0;
+}
+
+/* line 141, ../../../css/sass/plugins/_normalize.scss */
+h4 {
+  font-size: 1em;
+  margin: 1.33em 0;
+}
+
+/* line 146, ../../../css/sass/plugins/_normalize.scss */
+h5 {
+  font-size: 0.83em;
+  margin: 1.67em 0;
+}
+
+/* line 151, ../../../css/sass/plugins/_normalize.scss */
+h6 {
+  font-size: 0.67em;
+  margin: 2.33em 0;
+}
+
+/**
+ * Address styling not present in IE 7/8/9, Safari 5, and Chrome.
+ */
+/* line 160, ../../../css/sass/plugins/_normalize.scss */
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 3+, Safari 4/5, and Chrome.
+ */
+/* line 169, ../../../css/sass/plugins/_normalize.scss */
+b,
+strong {
+  font-weight: bold;
+}
+
+/* line 173, ../../../css/sass/plugins/_normalize.scss */
+blockquote {
+  margin: 1em 40px;
+}
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+/* line 181, ../../../css/sass/plugins/_normalize.scss */
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ * Known issue: no IE 6/7 normalization.
+ */
+/* line 190, ../../../css/sass/plugins/_normalize.scss */
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+/**
+ * Address styling not present in IE 6/7/8/9.
+ */
+/* line 200, ../../../css/sass/plugins/_normalize.scss */
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+/**
+ * Address margins set differently in IE 6/7.
+ */
+/* line 210, ../../../css/sass/plugins/_normalize.scss */
+p,
+pre {
+  margin: 1em 0;
+}
+
+/**
+ * Correct font family set oddly in IE 6, Safari 4/5, and Chrome.
+ */
+/* line 221, ../../../css/sass/plugins/_normalize.scss */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif;
+  _font-family: 'courier new', monospace;
+  font-size: 1em;
+}
+
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+/* line 231, ../../../css/sass/plugins/_normalize.scss */
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/**
+ * Address CSS quotes not supported in IE 6/7.
+ */
+/* line 241, ../../../css/sass/plugins/_normalize.scss */
+q {
+  quotes: none;
+}
+
+/**
+ * Address `quotes` property not supported in Safari 4.
+ */
+/* line 250, ../../../css/sass/plugins/_normalize.scss */
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+/* line 259, ../../../css/sass/plugins/_normalize.scss */
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+/* line 268, ../../../css/sass/plugins/_normalize.scss */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+/* line 275, ../../../css/sass/plugins/_normalize.scss */
+sup {
+  top: -0.5em;
+}
+
+/* line 279, ../../../css/sass/plugins/_normalize.scss */
+sub {
+  bottom: -0.25em;
+}
+
+/* ==========================================================================
+   Lists
+   ========================================================================== */
+/**
+ * Address margins set differently in IE 6/7.
+ */
+/* line 294, ../../../css/sass/plugins/_normalize.scss */
+dl,
+menu,
+ol,
+ul {
+  margin: 1em 0;
+}
+
+/* line 298, ../../../css/sass/plugins/_normalize.scss */
+dd {
+  margin: 0 0 0 40px;
+}
+
+/**
+ * Address paddings set differently in IE 6/7.
+ */
+/* line 308, ../../../css/sass/plugins/_normalize.scss */
+menu,
+ol,
+ul {
+  padding: 0 0 0 40px;
+}
+
+/**
+ * Correct list images handled incorrectly in IE 7.
+ */
+/* line 317, ../../../css/sass/plugins/_normalize.scss */
+nav ul,
+nav ol {
+  list-style: none;
+  list-style-image: none;
+}
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+/**
+ * 1. Remove border when inside `a` element in IE 6/7/8/9 and Firefox 3.
+ * 2. Improve image quality when scaled in IE 7.
+ */
+/* line 331, ../../../css/sass/plugins/_normalize.scss */
+img {
+  border: 0;
+  /* 1 */
+  -ms-interpolation-mode: bicubic;
+  /* 2 */
+}
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+/* line 340, ../../../css/sass/plugins/_normalize.scss */
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+/**
+ * Address margin not present in IE 6/7/8/9, Safari 5, and Opera 11.
+ */
+/* line 352, ../../../css/sass/plugins/_normalize.scss */
+figure {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+/**
+ * Correct margin displayed oddly in IE 6/7.
+ */
+/* line 364, ../../../css/sass/plugins/_normalize.scss */
+form {
+  margin: 0;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+/* line 372, ../../../css/sass/plugins/_normalize.scss */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct color not being inherited in IE 6/7/8/9.
+ * 2. Correct text not wrapping in Firefox 3.
+ * 3. Correct alignment displayed oddly in IE 6/7.
+ */
+/* line 384, ../../../css/sass/plugins/_normalize.scss */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  white-space: normal;
+  /* 2 */
+  *margin-left: -7px;
+  /* 3 */
+}
+
+/**
+ * 1. Correct font size not being inherited in all browsers.
+ * 2. Address margins set differently in IE 6/7, Firefox 3+, Safari 5,
+ *    and Chrome.
+ * 3. Improve appearance and consistency in all browsers.
+ */
+/* line 401, ../../../css/sass/plugins/_normalize.scss */
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+  vertical-align: baseline;
+  /* 3 */
+  *vertical-align: middle;
+  /* 3 */
+}
+
+/**
+ * Address Firefox 3+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+/* line 414, ../../../css/sass/plugins/_normalize.scss */
+button,
+input {
+  line-height: normal;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 6+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+/* line 426, ../../../css/sass/plugins/_normalize.scss */
+button,
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ * 4. Remove inner spacing in IE 7 without affecting normal text inputs.
+ *    Known issue: inner spacing remains in IE 6.
+ */
+/* line 443, ../../../css/sass/plugins/_normalize.scss */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+  *overflow: visible;
+  /* 4 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+/* line 454, ../../../css/sass/plugins/_normalize.scss */
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+/**
+ * 1. Address box sizing set to content-box in IE 8/9.
+ * 2. Remove excess padding in IE 8/9.
+ * 3. Remove excess padding in IE 7.
+ *    Known issue: excess padding remains in IE 6.
+ */
+/* line 466, ../../../css/sass/plugins/_normalize.scss */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+  *height: 13px;
+  /* 3 */
+  *width: 13px;
+  /* 3 */
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+/* line 479, ../../../css/sass/plugins/_normalize.scss */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+  box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+/* line 492, ../../../css/sass/plugins/_normalize.scss */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Remove inner padding and border in Firefox 3+.
+ */
+/* line 501, ../../../css/sass/plugins/_normalize.scss */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * 1. Remove default vertical scrollbar in IE 6/7/8/9.
+ * 2. Improve readability and alignment in all browsers.
+ */
+/* line 511, ../../../css/sass/plugins/_normalize.scss */
+textarea {
+  overflow: auto;
+  /* 1 */
+  vertical-align: top;
+  /* 2 */
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+/* line 524, ../../../css/sass/plugins/_normalize.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* #006cb7 #006bb6 #116eaa This blue seems quite similar to the nav blue, so I am making them the same. */
+/**
+*BLEACHABLE MOMENTS COLORS
+*/
+/* Text Links */
+/* Navigation Buttons */
+/* Blue Comment Button*/
+/* Red Vote Button*/
+/* Blue Check It Button*/
+/* Promo Panel Button */
+/*
+This CSS resource incorporates links to font software which is the valuable copyrighted
+property of Monotype Imaging and/or its suppliers. You may not attempt to copy, install,
+redistribute, convert, modify or reverse engineer this font software. Please contact Monotype
+Imaging with any questions regarding Web Fonts:  http://webfonts.fonts.com
+*/
+@font-face {
+  font-family: "Proxima N W01 Reg";
+  src: url("../Fonts/7e90123f-e4a7-4689-b41f-6bcfe331c00a.eot?#iefix");
+  src: url("../Fonts/7e90123f-e4a7-4689-b41f-6bcfe331c00a.eot?#iefix") format("eot"), url("../Fonts/e56ecb6d-da41-4bd9-982d-2d295bec9ab0.woff") format("woff"), url("../Fonts/2aff4f81-3e97-4a83-9e6c-45e33c024796.ttf") format("truetype"), url("../Fonts/ab9cd062-380f-4b53-b1a7-c0bec7402235.svg#ab9cd062-380f-4b53-b1a7-c0bec7402235") format("svg");
+}
+
+@font-face {
+  font-family: "Proxima N W01 Smbd";
+  src: url("../Fonts/87e4b4fc-cdf1-450a-8bed-dd818cba908d.eot?#iefix");
+  src: url("../Fonts/87e4b4fc-cdf1-450a-8bed-dd818cba908d.eot?#iefix") format("eot"), url("../Fonts/70ae52ec-d89b-4c6a-9402-854ebe423c54.woff") format("woff"), url("../Fonts/6a35571c-ea14-4dac-9ae1-0e7af0abeec8.ttf") format("truetype"), url("../Fonts/ac2bdafc-d4a8-49d0-8a10-4e2f16bf7e3c.svg#ac2bdafc-d4a8-49d0-8a10-4e2f16bf7e3c") format("svg");
+}
+
+@font-face {
+  font-family: "Proxima N W01 Bold";
+  src: url("../Fonts/fbc6b03a-b3a1-427c-a884-053deca3a53c.eot?#iefix");
+  src: url("../Fonts/fbc6b03a-b3a1-427c-a884-053deca3a53c.eot?#iefix") format("eot"), url("../Fonts/d999c07b-a049-4eb5-b8a6-4f36ae25e67e.woff") format("woff"), url("../Fonts/4d4a75f5-d32a-4a09-8665-133afd39cc37.ttf") format("truetype"), url("../Fonts/8152bc4e-d700-4c78-b6be-326893e6f53f.svg#8152bc4e-d700-4c78-b6be-326893e6f53f") format("svg");
+}
+
+@font-face {
+  font-family: "Proxima N W01 Xbold";
+  src: url("../Fonts/9fbce143-f5db-4c0b-9159-b1e666079f67.eot?#iefix");
+  src: url("../Fonts/9fbce143-f5db-4c0b-9159-b1e666079f67.eot?#iefix") format("eot"), url("../Fonts/19dd5cf2-ac2d-48d5-901a-c432fd291ee2.woff") format("woff"), url("../Fonts/22cfbfa4-f607-4751-92eb-6fa194353e57.ttf") format("truetype"), url("../Fonts/3d6b6348-e05f-4123-b19a-3bfd02c7f361.svg#3d6b6348-e05f-4123-b19a-3bfd02c7f361") format("svg");
+}
+
+@font-face {
+  font-family: "Proxima N W15 Cd Light";
+  src: url("../Fonts/71d27047-aee7-4513-aa39-93acec4189af.eot?#iefix");
+  src: url("../Fonts/71d27047-aee7-4513-aa39-93acec4189af.eot?#iefix") format("eot"), url("../Fonts/69d0a741-16e2-4ba2-9f9d-4fbe3d972acf.woff") format("woff"), url("../Fonts/c650156e-a72f-4031-8687-7e3519940f30.ttf") format("truetype"), url("../Fonts/d1116fb4-2dec-4fad-b64c-4ed24e4d3db0.svg#d1116fb4-2dec-4fad-b64c-4ed24e4d3db0") format("svg");
+}
+
+@font-face {
+  font-family: "Proxima N W15 Cd Smbd";
+  src: url("../Fonts/d98fcd0d-5b66-4059-8543-8b20d2df6c4e.eot?#iefix");
+  src: url("../Fonts/d98fcd0d-5b66-4059-8543-8b20d2df6c4e.eot?#iefix") format("eot"), url("../Fonts/25fea31c-0cde-4457-b875-139b2f814d65.woff") format("woff"), url("../Fonts/8304ee6d-ecc7-4c17-bc8d-86f956dd63ed.ttf") format("truetype"), url("../Fonts/b08d6b72-1661-499a-be7b-a62094eab547.svg#b08d6b72-1661-499a-be7b-a62094eab547") format("svg");
+}
+
+/* line 5, ../sass/core/_carousel.scss */
+#carousel_toplaughpage.carouselWrapper .carouselControls {
+  display: none;
+}
+/* line 10, ../sass/core/_carousel.scss */
+#carousel_toplaughpage.carouselWrapper .pagerWrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: auto;
+  background: #2bc4fe;
+}
+/* line 18, ../sass/core/_carousel.scss */
+#carousel_toplaughpage.carouselWrapper .pagerWrapper .pager-caroussel-wrapper {
+  width: 92.77344%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+/* line 24, ../sass/core/_carousel.scss */
+#carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerItem {
+  width: 33.36842%;
+  display: inline-block;
+  height: 100%;
+  padding: 0px;
+  overflow: hidden;
+}
+/* line 33, ../sass/core/_carousel.scss */
+#carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  height: 131px;
+}
+/* line 41, ../sass/core/_carousel.scss */
+#carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .left,
+#carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .right {
+  position: absolute;
+  height: 100%;
+  width: 20px;
+  background: #2bc4fe;
+}
+/* line 48, ../sass/core/_carousel.scss */
+#carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .left img,
+#carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .right img {
+  position: absolute;
+  top: 50px;
+}
+/* line 55, ../sass/core/_carousel.scss */
+#carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .left {
+  left: 0;
+}
+/* line 58, ../sass/core/_carousel.scss */
+#carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .right {
+  right: 0;
+}
+
+/* line 2, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh {
+  background: #dbf3fd url(/img/laugh/backgroundLaugh30@2x.gif) no-repeat;
+  background-size: 100%;
+}
+@media screen and (min-width: 481px) {
+  /* line 2, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh {
+    background: #dbf3fd url(/img/laugh/backgroundLaugh30.png) no-repeat;
+  }
+}
+/* line 12, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .slideshowPanel {
+  margin-bottom: 40px;
+}
+@media screen and (min-width: 481px) {
+  /* line 12, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh .slideshowPanel {
+    margin-bottom: 50px;
+  }
+}
+/* line 20, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .slideshowPanel .slide {
+  width: 100%;
+  min-height: 331px;
+  height: 100%;
+  position: relative;
+  display: block;
+}
+@media screen and (min-width: 481px) {
+  /* line 20, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh .slideshowPanel .slide {
+    min-height: 515px;
+  }
+}
+/* line 31, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .slideshowPanel .slide .corner-wrapper-image {
+  display: block;
+  width: 25.46875%;
+  height: 99.5 px;
+  display: block;
+  position: absolute;
+  right: -1px;
+  bottom: 0;
+  z-index: 999;
+}
+@media screen and (min-width: 481px) {
+  /* line 31, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh .slideshowPanel .slide .corner-wrapper-image {
+    display: none;
+  }
+}
+/* line 45, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .slideshowPanel .slide .corner-wrapper-image img {
+  width: 100%;
+}
+/* line 51, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .slideshowPanel .slide .corner-wrapper {
+  display: none;
+}
+@media screen and (min-width: 481px) {
+  /* line 51, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh .slideshowPanel .slide .corner-wrapper {
+    width: 145px;
+    height: 153px;
+    display: block;
+    position: absolute;
+    right: -5px;
+    bottom: 0;
+  }
+}
+/* line 63, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .slideshowPanel .slide .corner-wrapper img {
+  width: 100%;
+}
+/* line 71, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #headerLaughLanding {
+  height: auto;
+  min-height: auto;
+  padding: 0;
+  background: transparent;
+  margin: 0;
+}
+@media screen and (min-width: 481px) {
+  /* line 71, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #headerLaughLanding {
+    height: 223px;
+    background: transparent url(/img/laugh/header-laugh-new-2014.png) 0 0 no-repeat;
+  }
+}
+/* line 84, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #headerLaughLanding > img {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+@media screen and (min-width: 481px) {
+  /* line 84, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #headerLaughLanding > img {
+    display: none;
+  }
+}
+@media screen and (min-width: 481px) {
+  /* line 97, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #headerLaughLanding .socialmediaSide {
+    top: 235px;
+  }
+}
+/* line 106, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper #slides_toplaughpage {
+  width: 100%;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+/* line 118, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carouselControls {
+  display: none;
+}
+/* line 123, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager {
+  width: 100%;
+  height: 65px;
+  background: #2bc4fe;
+  position: relative;
+}
+@media screen and (min-width: 481px) {
+  /* line 123, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager {
+    height: 130px;
+  }
+}
+/* line 134, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-left,
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-right {
+  text-align: center;
+  background-color: #2bc4fe;
+}
+/* line 138, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-left i.fa,
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-right i.fa {
+  font-size: 1.3125rem;
+  margin-top: 22px;
+  color: #FFFFFF;
+  display: block;
+  opacity: 0.75;
+}
+@media screen and (min-width: 481px) {
+  /* line 138, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-left i.fa,
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-right i.fa {
+    font-size: 2rem;
+    margin-top: 49px;
+  }
+}
+/* line 152, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-left:hover i.fa,
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-right:hover i.fa {
+  opacity: 1;
+}
+/* line 158, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-left {
+  width: 11.25%;
+  height: 100%;
+  display: block;
+  position: relative;
+  float: left;
+}
+@media screen and (min-width: 481px) {
+  /* line 158, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-left {
+    width: 4.19922%;
+  }
+}
+/* line 170, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-right {
+  width: 11.25%;
+  height: 100%;
+  display: block;
+  position: relative;
+  float: right;
+  background: #2bc4fe url(/Carousel/templates/img/bkg-white-1x1.png) repeat-y;
+}
+@media screen and (min-width: 481px) {
+  /* line 170, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-arrow-right {
+    position: absolute;
+    float: none;
+    right: 0;
+    width: 4.19922%;
+    background: #2bc4fe;
+  }
+}
+/* line 187, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-slider-wrapper {
+  width: 77.5%;
+  height: 100%;
+  position: relative;
+  float: left;
+}
+@media screen and (min-width: 481px) {
+  /* line 187, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager .pager-slider-wrapper {
+    width: 95.80078%;
+  }
+}
+/* line 199, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider {
+  width: 100%;
+  height: 100%;
+  float: left;
+  position: relative;
+  margin: 0;
+}
+@media screen and (min-width: 481px) {
+  /* line 199, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider {
+    width: 981px;
+  }
+}
+/* line 210, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item {
+  width: auto;
+  height: 100%;
+  display: block;
+  margin: 0;
+  position: relative;
+  background: #2bc4fe url(/Carousel/templates/img/bkg-white-1x1.png) repeat-y;
+}
+@media screen and (min-width: 481px) {
+  /* line 210, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item {
+    border-left: 1px solid #FFFFFF;
+    width: 327px;
+  }
+}
+/* line 223, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item:hover {
+  background: #0c8bd9 url(/Carousel/templates/img/bkg-white-1x1.png) repeat-y;
+}
+/* line 227, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item.active {
+  background: #0c8bd9 url(/Carousel/templates/img/bkg-white-1x1.png) repeat-y;
+}
+/* line 231, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item .nub {
+  display: none;
+}
+@media screen and (min-width: 481px) {
+  /* line 231, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item .nub {
+    width: 42px;
+    height: 20px;
+    display: block;
+    position: absolute;
+    top: -20px;
+    left: 27.87879%;
+    background: url(/Carousel/templates/img/active-nub.png) repeat-y;
+    background-size: 100%;
+    z-index: 999;
+  }
+}
+/* line 247, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item a {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* line 253, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item .pager-image {
+  width: 100%;
+  max-width: 65px;
+  height: 100%;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+}
+@media screen and (min-width: 481px) {
+  /* line 253, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item .pager-image {
+    width: 39.8773%;
+    max-width: 130px;
+    margin: 0;
+    float: left;
+  }
+}
+/* line 268, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item .pager-image img {
+  width: 100%;
+}
+@media screen and (min-width: 481px) {
+  /* line 268, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item .pager-image img {
+    width: 100%;
+  }
+}
+/* line 277, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item .pager-text {
+  display: none;
+}
+@media screen and (min-width: 481px) {
+  /* line 277, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item .pager-text {
+    width: 57.05521%;
+    height: 100%;
+    display: block;
+    position: relative;
+    float: left;
+    color: #FFFFFF;
+    padding: 20px 3.06748% 0 0;
+    white-space: normal !important;
+  }
+}
+/* line 291, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item .pager-text p {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Proxima N W01 Smbd", Helvetica, Verdana, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1;
+  white-space: normal !important;
+}
+/* line 301, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .carousel-pager ul.pager-slider .pager-item .pager-text i.fa {
+  color: #ffce00;
+}
+/* line 310, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  height: 64px;
+  background: #2bc4fe;
+}
+@media screen and (min-width: 481px) {
+  /* line 310, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper {
+    height: 131px;
+  }
+}
+/* line 322, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pager-caroussel-wrapper {
+  width: 76.25%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+@media screen and (min-width: 481px) {
+  /* line 322, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pager-caroussel-wrapper {
+    width: 92.77344%;
+  }
+}
+/* line 331, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerItem {
+  width: 342px;
+  display: inline-block;
+  height: 100%;
+  padding: 0px;
+  overflow: hidden;
+}
+/* line 340, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls {
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  height: 64px;
+}
+@media screen and (min-width: 481px) {
+  /* line 340, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls {
+    height: 131px;
+  }
+}
+/* line 352, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .left,
+#bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .right {
+  position: absolute;
+  height: 100%;
+  width: 20px;
+  background: #2bc4fe;
+}
+/* line 359, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .left img,
+#bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .right img {
+  position: absolute;
+  top: 20px;
+}
+@media screen and (min-width: 481px) {
+  /* line 359, ../../../css/sass/laughSection/pages/_laugh.scss */
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .left img,
+  #bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .right img {
+    top: 50px;
+  }
+}
+/* line 370, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .left {
+  left: 0;
+}
+/* line 373, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh #carousel_toplaughpage.carouselWrapper .pagerWrapper .pagerControls .right {
+  right: 0;
+}
+/* line 379, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 730px;
+  background: url(/Carousel/templates/img/laugh/BLMomentSlideBackground.png) repeat;
+  overflow: hidden;
+}
+/* line 386, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper .airplane, #bodylaugh .head-to-head-wrapper .blm-logo, #bodylaugh .head-to-head-wrapper .baloons {
+  position: absolute;
+}
+/* line 389, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper .airplane {
+  left: 0;
+  top: 10px;
+}
+/* line 393, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper .blm-logo {
+  left: 24px;
+  top: 76px;
+}
+/* line 397, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper .baloons {
+  top: 28px;
+  right: 52px;
+}
+/* line 401, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper #headToHead {
+  position: relative;
+  top: 194px;
+}
+/* line 405, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper .headline {
+  font-family: "Proxima N W01 Xbold", Helvetica, Verdana, Arial, sans-serif;
+  font-weight: normal;
+  color: #005c9c;
+  font-size: 3em;
+  position: relative;
+  top: 101px;
+  left: 193px;
+  line-height: 1em;
+  letter-spacing: -2px;
+}
+/* line 417, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper header.ribbon h2 {
+  width: 27.73438%;
+  font-size: 1.2em;
+}
+/* line 423, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper header.ribbon img.flagRight {
+  right: 32.61719%;
+}
+/* line 427, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper header.ribbon img.flagLeft {
+  left: 32.61719%;
+}
+/* line 432, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper .cta {
+  position: relative;
+  top: 200px;
+  left: 200px;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #005c9c;
+}
+/* line 439, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper .cta .cta-title {
+  color: #FFF;
+}
+/* line 442, ../../../css/sass/laughSection/pages/_laugh.scss */
+#bodylaugh .head-to-head-wrapper .cta .cta-content {
+  color: #005c9c;
+  margin: 10px;
+}
+
+/* line 2, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: url(/Carousel/templates/img/laugh/BLMomentSlideBackground.png) no-repeat;
+}
+/* line 10, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .blm-left-side {
+  width: 100%;
+  display: block;
+  position: relative;
+  float: left;
+}
+@media screen and (min-width: 481px) {
+  /* line 10, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+  .slide .bleachable-moments-slide .blm-left-side {
+    width: 50%;
+  }
+}
+/* line 21, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .blm-right-side {
+  display: none;
+}
+@media screen and (min-width: 481px) {
+  /* line 21, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+  .slide .bleachable-moments-slide .blm-right-side {
+    width: 50%;
+    display: block;
+    position: relative;
+    float: left;
+  }
+}
+/* line 32, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .headline {
+  width: 100%;
+  /* 100% */
+  position: relative;
+  left: -7.8125%;
+}
+@media screen and (min-width: 481px) {
+  /* line 32, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+  .slide .bleachable-moments-slide .headline {
+    left: -10.15625%;
+  }
+}
+/* line 41, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .headline img {
+  width: 98.63281%;
+}
+/* line 46, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide form.momentSubmitForm {
+  width: 79.0625%;
+  min-height: 120px;
+  background: url(/img/bleachable-moments/theme/firsts/background-diagonal-mint.png);
+  position: relative;
+  z-index: 8;
+  float: left;
+  display: inline-block;
+  margin: 20px 0 20px 15.625%;
+  padding: 0;
+}
+@media screen and (min-width: 481px) {
+  /* line 46, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+  .slide .bleachable-moments-slide form.momentSubmitForm {
+    width: 77.73438%;
+    height: 151px;
+    margin: 20px 0 24px 10.9375%;
+  }
+}
+/* line 66, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide form.momentSubmitForm input[type="text"],
+.slide .bleachable-moments-slide form.momentSubmitForm input[type="textarea"],
+.slide .bleachable-moments-slide form.momentSubmitForm textarea {
+  -webkit-box-shadow: 0 5px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.15);
+  width: 88.14229%;
+  min-height: 20px;
+  height: auto;
+  display: block;
+  padding: 10px 1.97628%;
+  border: none;
+  float: left;
+  font-family: "Proxima N W01 Smbd", Helvetica, Verdana, Arial, sans-serif;
+  font-size: 0.75em;
+  line-height: 1.25;
+  color: #888888;
+  resize: none;
+  overflow: hidden;
+  word-wrap: break-word;
+  position: relative;
+  top: 10px;
+  left: 3.95257%;
+  clear: both;
+}
+/* line 88, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide form.momentSubmitForm input[type="text"]:focus,
+.slide .bleachable-moments-slide form.momentSubmitForm input[type="textarea"]:focus,
+.slide .bleachable-moments-slide form.momentSubmitForm textarea:focus {
+  outline: 0;
+}
+@media screen and (min-width: 481px) {
+  /* line 66, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+  .slide .bleachable-moments-slide form.momentSubmitForm input[type="text"],
+  .slide .bleachable-moments-slide form.momentSubmitForm input[type="textarea"],
+  .slide .bleachable-moments-slide form.momentSubmitForm textarea {
+    width: 82.41206%;
+    padding: 20px 3.76884% 0 3.76884%;
+    font-size: 1.125em;
+    top: 18px;
+    float: right;
+    left: auto;
+    right: 5.02513%;
+  }
+}
+/* line 103, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide form.momentSubmitForm input[type="submit"] {
+  min-height: 20px;
+  height: auto;
+  border: none;
+  border-color: #f75c3d !important;
+  border-bottom: 5px solid #f75c3d;
+  -webkit-box-shadow: 0 5px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.15);
+  display: inline-block;
+  margin: 20px 0 0 3.95257%;
+  padding: 8px 11px;
+  float: left;
+  background: #f9856e;
+  font-family: "Proxima N W01 Xbold", Helvetica, Verdana, Arial, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1;
+  z-index: 11;
+  position: relative;
+  left: 3.95257%;
+}
+@media screen and (min-width: 481px) {
+  /* line 103, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+  .slide .bleachable-moments-slide form.momentSubmitForm input[type="submit"] {
+    font-size: 1.125em;
+    padding: 8px 18px;
+    float: right;
+    top: 10px;
+    left: auto;
+    right: 5.02513%;
+  }
+}
+/* line 134, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .CLBSave50 {
+  width: 19.76285%;
+  position: absolute;
+  left: 3.95257%;
+  z-index: 999;
+}
+@media screen and (min-width: 481px) {
+  /* line 134, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+  .slide .bleachable-moments-slide .CLBSave50 {
+    width: auto;
+  }
+}
+/* line 144, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .CLBSave50 img {
+  width: 100%;
+  max-height: 161px;
+}
+@media screen and (min-width: 481px) {
+  /* line 144, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+  .slide .bleachable-moments-slide .CLBSave50 img {
+    width: auto;
+    height: 161px;
+    margin: 13px 0 0 0;
+  }
+}
+/* line 157, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .winnerFlag {
+  position: absolute;
+  top: 87px;
+  left: 522px;
+}
+/* line 163, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .bleachableMoment {
+  display: none;
+}
+@media screen and (min-width: 481px) {
+  /* line 163, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+  .slide .bleachable-moments-slide .bleachableMoment {
+    width: 90.42969%;
+    border: 1px solid #f3f3f3;
+    margin-bottom: 30px;
+    border-bottom: 5px solid #cecece;
+    position: absolute;
+    background: #ffffff;
+    float: right;
+    display: inline-block;
+    top: 45px;
+    right: 8.59375%;
+  }
+}
+@media screen and (min-width: 900px) {
+  /* line 163, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+  .slide .bleachable-moments-slide .bleachableMoment {
+    height: 422px;
+  }
+}
+/* line 184, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .bleachableMoment .momentTop {
+  padding: 0;
+  position: relative;
+  top: 48px;
+}
+/* line 189, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .bleachableMoment .momentTop .momentDetails {
+  position: relative;
+  top: 0;
+}
+/* line 193, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .bleachableMoment .momentTop .momentDetails ul {
+  padding: 0;
+}
+/* line 196, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .bleachableMoment .momentTop .momentDetails ul li {
+  width: 100%;
+  float: left;
+  display: block;
+}
+/* line 204, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .bleachableMoment .momentBody {
+  width: 369px;
+  display: block;
+  padding: 20px 2.90456%;
+  max-height: 172px;
+  margin: 34px;
+}
+/* line 211, ../../../css/sass/laughSection/slides/_BLMSingleSlide.scss */
+.slide .bleachable-moments-slide .bleachableMoment .diagDivider, .slide .bleachable-moments-slide .bleachableMoment span.momentComment, .slide .bleachable-moments-slide .bleachableMoment span.socialPanel.rightSide {
+  display: none;
+}
+
+/* line 3, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-size: auto 100% !important;
+  background-position: center !important;
+}
+@media screen and (min-width: 481px) {
+  /* line 3, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide {
+    background-size: auto 100% !important;
+  }
+}
+/* line 16, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .ickContent {
+  width: 100%;
+  height: 100%;
+}
+/* line 20, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .ickContent .ickContainer {
+  position: relative;
+  top: 47px;
+}
+/* line 24, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .ickContent .ickContainer .ickWord {
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  -ms-transform: rotate(-3deg);
+  -o-transform: rotate(-3deg);
+  transform: rotate(-3deg);
+  zoom: 1;
+  width: auto;
+  position: relative;
+  display: inline-block;
+  color: #FFFFFF;
+  background: #000000;
+  padding: 0.30769230769231em 0.23076923076923em;
+  /* width: 20px / 65pt / height: 15px / 65pt*/
+  font: "Proxima N W01 Xbold", Helvetica, Verdana, Arial, sans-serif;
+  font-size: 2.25rem;
+  /* 36px */
+  font-weight: bold;
+  line-height: 1em;
+  clear: both;
+}
+@media screen and (min-width: 481px) {
+  /* line 24, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .ickContent .ickContainer .ickWord {
+    font-size: 3.25rem;
+    /* 52px */
+  }
+}
+/* line 43, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .ickContent .ickContainer .ickWord a {
+  color: #FFFFFF;
+}
+/* line 48, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .ickContent .ickContainer .ickPhonetic {
+  position: relative;
+  margin: 0.9375em 0 1.217656012177% 6.25%;
+  /* top: 15pt / 16pt / bottom: 8px / 657px / right: 80px / 1280px */
+  display: inline-block;
+  color: #666666;
+  font-size: 1rem;
+  /* 16px */
+  line-height: 1em;
+  padding: .2em;
+}
+@media screen and (min-width: 481px) {
+  /* line 48, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .ickContent .ickContainer .ickPhonetic {
+    font-size: 1.75rem;
+    /* 28px */
+  }
+}
+/* line 62, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .ickContent .ickContainer .ickDefinitionContainer {
+  width: 90.625%;
+  position: relative;
+  margin: 0 4.6875% 1em 4.6875%;
+}
+@media screen and (min-width: 481px) {
+  /* line 62, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .ickContent .ickContainer .ickDefinitionContainer {
+    width: 58.59375%;
+    margin: 0 0 1em 4.39453%;
+  }
+}
+/* line 72, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .ickContent .ickContainer .ickDefinitionContainer .ickDefinition {
+  position: relative;
+  display: inline-block;
+  color: #000000;
+  font-size: 1rem;
+  /* 16px */
+  line-height: 1em;
+  padding: .2em;
+}
+@media screen and (min-width: 481px) {
+  /* line 72, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .ickContent .ickContainer .ickDefinitionContainer .ickDefinition {
+    font-size: 2.4375rem;
+    /* 39px */
+  }
+}
+/* line 88, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper {
+  width: 100%;
+  position: absolute;
+  top: 215px;
+}
+@media screen and (min-width: 481px) {
+  /* line 88, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .center-panel-wrapper {
+    top: 381px;
+  }
+}
+/* line 98, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel {
+  background: #FFF;
+  border-radius: 17px;
+  width: 65.625%;
+  margin: 0 auto;
+  height: 97px;
+  overflow: visible;
+}
+@media screen and (min-width: 481px) {
+  /* line 98, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .center-panel-wrapper .center-panel {
+    min-width: 787px;
+    width: 76.85547%;
+  }
+}
+/* line 111, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel div.vertical-line {
+  display: none;
+}
+@media screen and (min-width: 481px) {
+  /* line 111, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .center-panel-wrapper .center-panel div.vertical-line {
+    width: 3px;
+    background-color: #DDD;
+    height: 84%;
+    float: left;
+    border-radius: 2px;
+    display: inline-block;
+    margin: 6px 1.27065%;
+  }
+}
+/* line 125, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .triple-col {
+  width: 100%;
+  display: inline-block;
+  float: left;
+}
+@media screen and (min-width: 481px) {
+  /* line 125, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .center-panel-wrapper .center-panel .triple-col {
+    width: 31.38501%;
+  }
+}
+/* line 135, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-left {
+  display: none;
+}
+@media screen and (min-width: 481px) {
+  /* line 135, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .center-panel-wrapper .center-panel .col-left {
+    display: block;
+    background: url("/img/laugh/ick-me-too.png") no-repeat 0;
+    height: 100%;
+  }
+}
+/* line 144, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-left .count {
+  -webkit-transform: rotate(4deg);
+  -moz-transform: rotate(4deg);
+  -ms-transform: rotate(4deg);
+  -o-transform: rotate(4deg);
+  transform: rotate(4deg);
+  zoom: 1;
+  font-family: "Proxima N W01 Xbold", Helvetica, Verdana, Arial, sans-serif;
+  color: #FFF;
+  font-weight: bold;
+  position: relative;
+  top: 59px;
+  left: 130px;
+}
+/* line 154, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-left .count span.number {
+  font-size: 21px;
+  background: none;
+}
+/* line 159, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-left .count .other {
+  font-family: "Proxima N W01 Xbold", Helvetica, Verdana, Arial, sans-serif;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0 5px 0 0;
+}
+/* line 168, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-center {
+  display: none;
+}
+@media screen and (min-width: 481px) {
+  /* line 168, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .center-panel-wrapper .center-panel .col-center {
+    display: block;
+  }
+}
+/* line 176, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-center .title {
+  height: 70px;
+  width: 96px;
+  float: left;
+  overflow: visible;
+  display: inline-block;
+  position: relative;
+  top: 24px;
+  left: 6px;
+}
+/* line 187, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-center .title .title-1,
+.slide .ick-slide .center-panel-wrapper .center-panel .col-center .title .title-2 {
+  display: inline-block;
+  color: #FFF;
+  background: #000;
+  padding: 2px 3px;
+  font-weight: bold;
+  font-size: 18px;
+  width: 93px;
+}
+/* line 197, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-center .title .title-1 {
+  -webkit-transform: rotate(5deg);
+  -moz-transform: rotate(5deg);
+  -ms-transform: rotate(5deg);
+  -o-transform: rotate(5deg);
+  transform: rotate(5deg);
+  zoom: 1;
+  position: absolute;
+  width: 70px;
+}
+/* line 203, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-center .title .title-2 {
+  -webkit-transform: rotate(-5deg);
+  -moz-transform: rotate(-5deg);
+  -ms-transform: rotate(-5deg);
+  -o-transform: rotate(-5deg);
+  transform: rotate(-5deg);
+  zoom: 1;
+  position: absolute;
+  top: 28px;
+}
+/* line 210, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-center .content {
+  font-size: 13px;
+  display: inline-block;
+  position: relative;
+  top: 22px;
+  left: 14px;
+  color: #808080;
+}
+/* line 218, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-center .content i {
+  color: #ffce00;
+}
+/* line 224, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-right {
+  display: block;
+  position: relative;
+}
+/* line 228, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-right img.product {
+  display: inline-block;
+  position: absolute;
+  top: -30px;
+  left: 5.95238%;
+}
+@media screen and (min-width: 481px) {
+  /* line 228, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .center-panel-wrapper .center-panel .col-right img.product {
+    left: 20px;
+  }
+}
+/* line 239, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-right div.content {
+  display: inline-block;
+  position: relative;
+  top: 10px;
+  left: 40.47619%;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #808080;
+  margin: 0;
+  padding: 0;
+}
+@media screen and (min-width: 481px) {
+  /* line 239, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+  .slide .ick-slide .center-panel-wrapper .center-panel .col-right div.content {
+    font-size: 1.125rem;
+    left: 44.53441%;
+  }
+}
+/* line 255, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-right div.content a {
+  color: #808080;
+}
+/* line 259, ../../../css/sass/laughSection/slides/_IckItemFromPage.scss */
+.slide .ick-slide .center-panel-wrapper .center-panel .col-right div.content i {
+  border-radius: 100%;
+  background-clip: padding-box;
+  font-size: 1.125rem;
+  padding-top: 6px;
+  width: 30px;
+  height: 24px;
+  display: block;
+  text-align: center;
+  background: #ffce00;
+  color: #FFFFFF;
+}
+
+/* line 2, ../../../css/sass/laughSection/slides/_IckVideoSlide.scss */
+.slide .video-slide {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #2bc4fe;
+  text-align: center;
+}
+/* line 11, ../../../css/sass/laughSection/slides/_IckVideoSlide.scss */
+.slide .video-slide .videoWrapper {
+  position: relative;
+  overflow: hidden;
+  width: 82.51953%;
+  margin: 0 auto;
+}
+/* line 18, ../../../css/sass/laughSection/slides/_IckVideoSlide.scss */
+.slide .video-slide .videoWrapper #videoPlayer {
+  position: relative;
+}
+/* line 26, ../../../css/sass/laughSection/slides/_IckVideoSlide.scss */
+.slide .video-slide .videoWrapper .playVideo {
+  display: none;
+}
+/* line 29, ../../../css/sass/laughSection/slides/_IckVideoSlide.scss */
+.slide .video-slide .videoWrapper .playVideo img {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 2, ../../../css/sass/laughSection/slides/_kids-corner-panel-slide.scss */
+.slide .feature-panel-slide {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-size: auto 100% !important;
+  background-position: center !important;
+}
+/* line 11, ../../../css/sass/laughSection/slides/_kids-corner-panel-slide.scss */
+.slide .feature-panel-slide h1 {
+  font-size: 1.8125rem;
+  margin: 0;
+  line-height: 1;
+}
+@media screen and (min-width: 481px) {
+  /* line 11, ../../../css/sass/laughSection/slides/_kids-corner-panel-slide.scss */
+  .slide .feature-panel-slide h1 {
+    font-size: 3.75rem;
+  }
+}
+/* line 20, ../../../css/sass/laughSection/slides/_kids-corner-panel-slide.scss */
+.slide .feature-panel-slide h1.blockheadline {
+  padding: .125em !important;
+}
+/* line 25, ../../../css/sass/laughSection/slides/_kids-corner-panel-slide.scss */
+.slide .feature-panel-slide h2 {
+  width: 51.5625%;
+  font-family: "Proxima N W01 Xbold", Helvetica, Verdana, Arial, sans-serif;
+  font-size: 1.4375rem;
+  color: #FFFFFF;
+  display: block;
+  line-height: 1;
+  margin-bottom: 61px;
+}
+@media screen and (min-width: 481px) {
+  /* line 25, ../../../css/sass/laughSection/slides/_kids-corner-panel-slide.scss */
+  .slide .feature-panel-slide h2 {
+    width: 400px;
+    font-size: 2.5rem;
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+}
+/* line 44, ../../../css/sass/laughSection/slides/_kids-corner-panel-slide.scss */
+.slide .feature-panel-slide .descriptionCopy {
+  display: none;
+}
+@media screen and (min-width: 481px) {
+  /* line 44, ../../../css/sass/laughSection/slides/_kids-corner-panel-slide.scss */
+  .slide .feature-panel-slide .descriptionCopy {
+    width: 550px;
+    font-size: 1.125rem;
+    line-height: 1.125;
+    display: block;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+  }
+}
+/* line 64, ../../../css/sass/laughSection/slides/_kids-corner-panel-slide.scss */
+.slide .feature-panel-slide .bottom {
+  display: block;
+  margin: 135px 0 0 7.8125%;
+}
+@media screen and (min-width: 481px) {
+  /* line 64, ../../../css/sass/laughSection/slides/_kids-corner-panel-slide.scss */
+  .slide .feature-panel-slide .bottom {
+    margin: 250px 0 0 6.34766%;
+  }
+}

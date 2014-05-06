@@ -1,0 +1,18 @@
+{
+	"name": "undefinedoffset/NestedDataObject",
+	"description": "Generates Editable, Nested DataObject in the CMS system",
+	"type": "silverstripe-module",
+	"keywords": ["silverstripe", "DataObject, Accordions"],
+	"authors": [
+		{
+			"name": "Luc Martin",
+			"homepage": "http://www.uirevamp.com",
+            "role": "Developer"
+		}
+	],
+
+	"require":
+	{
+		"silverstripe/framework": "3.*"
+	}
+}

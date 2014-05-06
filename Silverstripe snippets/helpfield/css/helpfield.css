@@ -1,0 +1,90 @@
+.helpField {
+	background-color: #F7F7F7;
+	border: 3px solid #E9E9E9;
+	margin-bottom: 13px;
+	padding: 2px 4px;
+	width: 850px;
+	color: #666;
+	position: relative;
+	z-index: 2;
+	display: none;
+	padding: 10px;
+	border: solid #A4A4A4;
+	border-radius: 8px;
+	box-shadow: 1px 1px 15px #999;
+}
+.helpField.open {
+	display: block;
+}
+
+.helpFieldButton {
+	display: block;
+	border-bottom: 0px;
+	position: relative;
+	z-index: 5;
+	text-decoration: none;
+	font-weight: bold;
+	width: 18px;
+	height: 22px;
+	border-radius: 4px;
+	background: #FFFFFF;
+	text-align: center;
+	float: left;
+	margin: 0 5px 0 0;
+}
+.helpFieldButton:hover {
+	background-color: #F7F7F7;
+	border: 3px solid #E9E9E9;
+	text-decoration: none;
+	box-shadow: 1px 1px 5px #888;
+}
+.helpFieldButtona:active {
+	outline: none;
+	box-shadow: 1px 1px 5px #888;
+}
+.grayHelpBox {
+	background: #F1F1F1;
+	border: solid #999 1px;
+	border-radius: 3px;
+	padding: 10px;
+	display: block;
+	margin: 1px auto 20px auto;
+	text-align: center;
+	font-size: 15px;
+	width: 50%;
+	color: #AAA;
+	box-shadow: 1px 1px 3px;
+}
+
+.helpFieldButton.open {
+	background-color: #F7F7F7;
+	border: 3px solid #E9E9E9;
+	text-decoration: none;
+	box-shadow: 1px 1px 5px #888;
+}
+
+.helpField p {
+	margin: 2px 0 !important;
+	font-size: 14px !important;
+}
+.helpText{
+	background: #F1F1F1;
+	border: solid #999 1px;
+	border-radius: 3px;
+	padding: 20px;
+	display: block;
+	margin: 1px auto 20px auto;
+	text-align: left;
+	font-size: 14px;
+	width: 95%;
+	color: #666;
+	box-shadow: 1px 1px 3px;
+	list-style:none;
+}
+.helpText ul{
+	list-style:none;
+}
+.helpText li{
+	margin:5px 2px 15px 15px;
+
+}

@@ -1,0 +1,28 @@
+<?php
+/**
+ * class TagsAdmin extends ModelAdmin
+ *
+ * The administration for the Tags
+ *
+ * @author Luc Martin lmartin -at- clorox.com
+ * @version $Id$
+ *
+ */
+class TagsAdmin extends ModelAdmin {
+
+    public static $managed_models = array(
+        'TagGeneral',
+        'TagFeatures',
+        'TagNeed',
+        'TagType',
+        'TagProductSelector'
+    );
+
+    static $model_importers = array('TagProductSelector' => 'TagProductSelectorCsvBulkLoader');
+
+    // Can manage multiple models
+    static $url_segment = 'Tags';
+    static $menu_title = 'Tagging Admin';
+
+}
+?>

@@ -1,0 +1,27 @@
+/*!
+* Description: CSS Styles.
+*/
+/**
+* These include the SASS files and output them to a CSS file. All the styles
+* should make a small css file that can be downloaded once and cached to`
+* improve the end user experience. If the outputted file is found to be too
+* large, it can be broken up into smaller files.
+*/
+
+// Include the external files/plugins
+@import '../../../css/sass/plugins/css3';
+@import '../../../css/sass/plugins/boilerplate';
+@import '../../../css/sass/plugins/normalize';
+@import '../../../css/sass/core/media-query-sizes';
+@import '../../../css/sass/core/colors';
+@import '../../../css/sass/core/fonts';
+
+// Include files from the Laugh Section directory.
+@import 'core/carousel';
+
+@import '../../../css/sass/laughSection/pages/laugh';
+
+@import '../../../css/sass/laughSection/slides/BLMSingleSlide';
+@import '../../../css/sass/laughSection/slides/IckItemFromPage';
+@import '../../../css/sass/laughSection/slides/IckVideoSlide';
+@import '../../../css/sass/laughSection/slides/kids-corner-panel-slide';

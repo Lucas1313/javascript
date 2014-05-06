@@ -1,0 +1,256 @@
+<?php
+/*
+ * CloroxApi_Controller
+ *
+ * Helper for the Clorox API import
+ *
+ * @author Luc Martin lmartin -at- clorox.com
+ * @version $Id: CloroxApi_Controller.php 29240 2014-02-18 22:54:47Z lmartin $
+ *
+ * Relationships:
+ * one-many =
+ * many-one =
+ * many-many =
+ *
+ */
+class CloroxApi_Controller  extends Extension {
+
+    public  $allProducts = array();
+    public  $allProductSubCategory = array();
+
+    /**
+     * function importProductsFromApi
+     * Method that performs calls to the Clorox API using the list of URL set in the DEFINED Constant RESTFUL_SERVICES_URLS
+     * Also Process the data from the API call to generate Product and ProductSubCategory DataObjects
+     *
+     * @param null
+     */
+    public function importProductsFromApi($caller = null, $processProduct = true) {
+
+        // Separate all the request to the API from the defined variable
+        $restfulServices = explode(',', RESTFUL_SERVICES_URLS);
+
+        // request data from the Clorox API using all addresses provided in the DEFINE RESTFUL_SERVICES_URLS
+        foreach ($restfulServices as $k => $restfulServiceURL) {
+
+            $restfulService = new RestfulService($restfulServiceURL);
+
+            // The response from API
+            $response = $restfulService -> request();
+
+            // decode the response from JSON object into an Array
+            $productsRawObj = json_decode($response -> getBody());
+
+            //Test if we get a response
+            if (!empty($productsRawObj)) {
+
+                //Extract the product from the item
+                $products = $productsRawObj -> response -> products;
+
+                $allProducts = array( array());
+
+                //Iterate trough the Product raw data and separate product and ProductSubCategory
+                foreach ($products as $key => $value) {
+
+                    // Name parameter is all we need for now
+                    $fullName = $value -> name;
+
+                    // Break the name in parts the first part of the name will be the product name and the second part will be a ProductSubCategory
+                    $stringManipulator = new StringManipulator_Controller();
+                    $productsAndSubProducts = $stringManipulator -> breakupProductName($value -> name);
+
+                    //codename
+                    $productCodeName = $stringManipulator -> generateCodeName($productsAndSubProducts['productName']);
+                    $productLegalName = $productsAndSubProducts['legalName'];
+
+                    //error_log('$productCodeName   ' . $productCodeName);
+
+                    // Create a ProductSubCategory array
+                    $this -> allProductSubCategory[$productCodeName][] = array(
+                        'Name' => $productsAndSubProducts['ProductSubCategoryDisplayName'],
+                        'legalName' => $value -> name,
+                        'id' => $value -> id,
+                        'Code_Name' => $value -> code_name,
+                        'image' => $value -> image_url
+                    );
+
+                    $this -> allProducts[$productCodeName] = array(
+                        'productName' => $productsAndSubProducts['productName'],
+                        'legalName' => $productLegalName
+                    );
+
+                }
+
+            }
+
+            asort($this -> allProducts);
+        }
+
+        if($processProduct == true){
+
+            $this -> processProductsImportedFromDb($caller);
+        }else{
+            return array( 'allProducts' => $this -> allProducts, 'allProductSubcategory' => $this -> allProductSubCategory);
+        }
+        
+    }
+
+    /**
+     * function processProductsImportedFromDb
+     *
+     * Import a list of products from a Database
+     *
+     * @param importProductsFromDb // if set to true: Import all Products, ProductSubCategory and ingredients from the Clorox API
+     *                   else imports from the cms Product list
+     * @return void
+     */
+    public  function processProductsImportedFromDb(&$caller) {
+
+        // the array with all product names from the DB
+        $allProducts = $this -> allProducts;
+        //error_log(print_r($allProducts, true));
+        // all the products we already have in the database
+        $alreadyImportedProducts = Product::get();
+
+        // generate an array with all the product name we already have
+        $alreadyImportedProductsCodeNamesAr = array();
+
+        foreach ($alreadyImportedProducts as $key => $value) {
+
+            $alreadyImportedProductsCodeNamesAr[] = $value -> Code_Name;
+        }
+
+        //Iterate trough the Clorox API import
+        foreach ($allProducts as $productCodeName => $productItem) {
+
+            //test if we already have the product in the array
+            if (!in_array($productCodeName, $alreadyImportedProductsCodeNamesAr)) {
+                
+                /**  WE ARE NOT IMPORTING THE PRODUCTS ANYMORE, ONLY THE PRODUCT SUB CATEGORIES
+                // it's not in the array so we can create a new product
+                $newProduct = new Product();
+                $usableName = str_replace('&reg;', '', $productItem['productName']);
+                $newProduct -> Name = $productItem['productName'];
+                $newProduct -> Display_Name = html_entity_decode($productItem['legalName']);
+                $newProduct -> LegalName = $productItem['legalName'];
+                $newProduct -> Code_Name = $productCodeName;
+                $newProduct -> DefaultProductImageLocation = IMAGE_FOLDER . 'products/' . $productCodeName;
+                $newProduct -> write();
+                $caller -> Products() -> add($newProduct);
+                error_log('ADDED >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>' . $newProduct -> Display_Name);
+                 * **/
+                $this -> addProductSubCategoryToProduct($newProduct);
+
+            }
+        }
+    }
+
+    /**
+     * Method to add ProductSubCategory to a product from an array
+     * Will generate a list of ProductSubCategory
+     * Will write the ProductSubCategory and will add the relationship to the new Product
+     *
+     * @param &$newProduct (New product being added)
+     * @return void
+     */
+    public  function addProductSubCategoryToProduct(&$newProduct) {
+
+        $allProductSubCategory = $this -> allProductSubCategory;
+
+        // all the products we already have in the database
+        $alreadyImportedProductSubCategory = ProductSubCategory::get();
+
+        // generate an array with all the product codeName we already have
+        $alreadyImportedProductSubCategoryCodeNamesAr = array();
+
+        foreach ($alreadyImportedProductSubCategory as $key => $value) {
+
+            $alreadyImportedProductSubCategoryCodeNamesAr[] = $value -> Code_Name;
+        }
+
+        //Iterate trough the array of imported ProductSubCategories
+        foreach ($allProductSubCategory[$newProduct->Code_Name] as $k => $subProduct) {
+            
+            // test if the productSubCat is already imported
+            if (!in_array($subProduct['codeName'], $alreadyImportedProductSubCategoryCodeNamesAr)) {
+                /** WE ARE NOT ADDING NEW PRODUCT SUB CATEGORIES 
+                error_log('ADDING SUB PRODUCT PRE___ ' . $subProduct['Name']);
+                $newProdSubCat = new ProductSubCategory();
+
+                $newProdSubCat -> Name = $subProduct['Name'];
+                $newProdSubCat -> RemoteIndexId = $subProduct['id'];
+                $newProdSubCat -> Legal_Name = $subProduct['legalName'];
+                $newProdSubCat -> Code_Name = $subProduct['Code_Name'];
+                $newProdSubCat -> write();
+                $newProduct -> ProductSubCategories() -> add($newProdSubCat);
+                $ingredients = $this -> addIngredientsProductSubCategory($newProdSubCat);**/
+            }else{
+                $ingredients = $this -> addIngredientsProductSubCategory($subProduct);
+            }
+
+        }
+    }
+
+    /**
+     * add Ingredient from the database Clorox API to ProductSubcategory
+     *
+     * @param $id Integer
+     * @return void
+     */
+    public function addIngredientsProductSubCategory(&$newProdSubCat) {
+
+        $newProdSubCatCodeName = $newProdSubCat -> Code_Name;
+
+        $restfulService = new RestfulService('http://staging.ingredients.thecloroxcompany.com/api/product/en-us/' . $newProdSubCatCodeName);
+
+        $response = $restfulService -> request();
+        $ingredientsFromApi = json_decode($response -> getBody());
+
+        $allIngredients = Ingredient::get();
+
+        $allIngredientsCodeNamesAr = array();
+
+        foreach ($allIngredients as $k => $ingredient) {
+            $allIngredientsCodeNamesAr[] = $ingredient -> Code_Name;
+        }
+
+        if (!empty($ingredientsFromApi)) {
+            foreach ($ingredientsFromApi as $key => $ingredientItem) {
+
+                if (!empty($ingredientItem) && !empty($ingredientItem -> ingredients)) {
+
+                    $ingredientObj = $ingredientItem -> ingredients;
+
+                    foreach ($ingredientObj as $key => $value) {
+
+                        if (!in_array($value -> code_name, $allIngredientsCodeNamesAr)) {
+
+                            $existingIngredient = Ingredient::get() -> filter(array('codeName' => $value -> code_name)) -> First();
+
+                            if (empty($existingIngredient)) {
+
+                                $newIngredient = new Ingredient();
+                                $newIngredient -> Remote_Index_Id = $value -> id;
+                                $newIngredient -> Name = $value -> name;
+                                $newIngredient -> Code_Name = $value -> code_name;
+                                $newIngredient -> Description = $value -> description;
+                                $newIngredient -> write();
+
+                            }
+                            else {
+
+                                $newIngredient = $existingIngredient;
+
+                            }
+                            //error_log('Adding Ingredient ' . $value -> code_name);
+                            $newProdSubCat -> Ingredients() -> add($newIngredient);
+
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,63 @@
+// ************  THE TOP PAGE CAROUSEL ************//
+#carousel_toplaughpage.carouselWrapper{
+
+	// HIDE THE CAROUSEL CONTROLS
+	.carouselControls{
+		display:none;
+	}
+
+	//******************** THE PAGER FOR THE CAROUSEL ****************//
+	.pagerWrapper {
+		 position: relative;
+		 width:pxwidth(1024,1024);
+		 overflow:hidden;
+		 height:auto;
+		 background:#2bc4fe;
+
+		// we need to limit the size and center the pager
+		.pager-caroussel-wrapper{
+				width: pxwidth(950,1024);
+				overflow: hidden;
+				margin: 0 auto;
+		}
+
+		.pagerItem {
+			width: pxwidth(317,950);
+			display: inline-block;
+			height: 100%;
+			padding: 0px;
+			overflow: hidden;
+	 	}
+
+		// the arrows to scroll the pager
+		.pagerControls {
+			position: absolute;
+			width: pxwidth(1024,1024);
+			top: 0px;
+			height:131px;
+
+			// global for both arrows
+			.left,
+			.right{
+				position:absolute;
+				height:100%;
+				width:20px;
+				background:#2bc4fe;
+
+				// center the image
+				img{
+					position: absolute;
+					top:50px;
+				}
+			}
+
+			// specific left and right
+			.left{
+				left:0;
+			}
+			.right{
+				right:0;
+			}
+		}
+	}
+}

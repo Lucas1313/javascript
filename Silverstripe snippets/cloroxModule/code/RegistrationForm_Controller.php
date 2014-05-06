@@ -1,0 +1,707 @@
+<?php
+/**
+ * RegistrationForm Class used to render registration forms 
+ * in template. 
+ * 
+ * RegistrationForm_Controller renders registration form and 
+ * processes actions.
+ * 
+ * @author Jason Ware jason.ware -at- clorox.com
+ * @package cloroxModule.code
+ * @version $Id: RegistrationForm_Controller.php 30123 2014-03-28 21:12:13Z ksmith $
+ */
+class RegistrationForm extends Page {
+
+}
+
+class RegistrationForm_Controller extends Page_Controller {
+    private $_member;
+    public function init(){
+        // ... This controller handles sensitive data, force HTTPS.
+        parent::init();
+    }
+    
+    /**
+     * FBSignupForm function.
+     * Provide a streamlined signup form to be filled with Facebook profile
+     * data.
+     * 
+     * @return Object the signup form data
+     */
+    public function FBSignupForm() {
+        // the form
+        $fdata = $this->FBSignupFormData();
+        $signupForm = new Form($this, 'FBSignupForm', $fdata[0], $fdata[1], $fdata[2]);
+
+        // don't allow selection of under-18 birthdate
+        $bd = $fdata[0]->fieldByName('Birthday');
+        $signupForm->minBirthDate = $bd->getConfig('max');
+        return $signupForm;
+    }
+
+    /**
+     * FBSignupFormData function.
+     * Provide fields for the FBSignupForm.
+     * 
+     * @return array of form field lists
+     */
+    protected function FBSignupFormData() {
+        Requirements::customScript('
+            jQuery(document).ready(function() {
+                jQuery("#Form_FBSignupForm").attr("autocomplete", "off");
+            });
+        ');
+
+        // the fields
+        $externalIdentifier = HiddenField::create('externalIdentifier');
+        $externalUsername = HiddenField::create('externalUsername');
+        $signedRequest = HiddenField::create('signedRequest');
+        $passwordField = HiddenField::create('Password');
+        $emailField = EmailField::create("Email", "Email Address");
+        $firstNameField = TextField::create("FirstName", "First Name");
+        $surnameField = TextField::create("Surname", "Last Name");
+
+        $bdField = DateField::create("Birthday", "Date of Birth");
+        $bdField->setConfig('showcalendar', true);
+        $bdField->setConfig('jQueryUI.changeMonth', true);
+        $bdField->setConfig('jQueryUI.changeYear', true);
+        $bdField->setConfig('jQueryUI.onClose', 'function() {$( this ).valid();}');
+        $bdField->setConfig('dateformat', 'MM/dd/YYYY');
+        // can't be any younger than 18
+        $minbd = mktime(0,0,0, date("m"), date("d"), date("Y") - 18);
+        $bdField->setConfig('max', date("Y-m-d", $minbd));
+
+        $touField = CheckboxField::create("TermsOfUse", "I have read and acccept the Terms of Use");
+        $offerField = CheckboxField::create("Offers", "Yes, I’d like to receive news, special offers and information from The Clorox Company.");
+
+        $fields = new FieldList($externalIdentifier,
+                                $externalUsername,
+                                $signedRequest,
+                                $passwordField,
+                                $firstNameField,
+                                $surnameField,
+                                $emailField,
+                                $bdField,
+                                $touField,
+                                $offerField);
+
+        $actions = new FieldList(new FormAction("FBSignupAction", "Sign Up"));
+
+        $required = new RequiredFields("FirstName", "Surname", "Email", "TermsOfUse", "Birthday");
+
+        return array($fields, $actions, $required);
+        
+    }
+
+    /**
+     * SignupForm function.
+     * Lets you put a form on your page, using $SignupForm.
+     * The list of form fields must be built here.
+     * 
+     * @return Object the signup form data
+     */
+    public function SignupForm() {
+
+        $fdata = $this->SignupFormData();
+        $signupForm = new Form($this, 'SignupForm', $fdata[0], $fdata[1], $fdata[2]);
+
+        // don't allow selection of under-18 birthdate
+        $bd = $fdata[0]->fieldByName('Birthday');
+        $signupForm->minBirthDate = $bd->getConfig('max');
+        return $signupForm;
+    }
+
+    /**
+     * SignupFormData function.
+     * Provides fields for the SignupForm.
+     * 
+     * @return array of form field lists
+     */
+    public function SignupFormData() {
+        // Force autocomplete=off attribute, as per sec. compliance request
+        Requirements::customScript('
+            jQuery(document).ready(function() {
+                jQuery("#Form_SignupForm").attr("autocomplete", "off");
+            });
+        ');
+
+        // the fields
+        $emailField = EmailField::create("Email", "Email Address");
+        $passwordField = PasswordField::create("Password", "Password");
+        $passwordField->setMaxLength(20);
+        $firstNameField = TextField::create("FirstName", "First Name");
+        $surnameField = TextField::create("Surname", "Last Name");
+        $genderField = OptionsetField::create($name = "Gender", 
+                                              $title ="Gender",
+                                              $source = array("M" => "M", 
+                                                              "F" => "F"),
+                                              $value = "M");
+                                              
+        $bdField = DateField::create("Birthday", "Date of Birth");
+        $bdField->setConfig('showcalendar', true);
+        $bdField->setConfig('jQueryUI.changeMonth', true);
+        $bdField->setConfig('jQueryUI.changeYear', true);
+        $bdField->setConfig('jQueryUI.onClose', 'function() {$( this ).valid();}');
+        $bdField->setConfig('dateformat', 'MM/dd/YYYY');
+        // can't be any younger than 18
+        $minbd = mktime(0,0,0, date("m"), date("d"), date("Y") - 18);
+        $bdField->setConfig('max', date("Y-m-d", $minbd));
+
+        $postalField = TextField::create("Postcode", "ZIP Code");
+        $touField = CheckboxField::create("TermsOfUse", "I have read and acccept the Terms of Use");
+        $offerField = CheckboxField::create("Offers", "Yes, I’d like to receive news, special offers and information from The Clorox Company.");
+        
+        $fields = new FieldList($firstNameField,
+                                $surnameField,
+                                $emailField,
+                                $genderField,
+                                $passwordField,
+                                $postalField,
+                                $bdField,
+                                $touField,
+                                $offerField
+                                );
+
+        $actions = new FieldList(new FormAction("SignupAction", "Sign Up"));
+
+        $required = new RequiredFields("FirstName", "Surname", "Email", "Password",
+                                       "TermsOfUse", "Postcode", "Birthday", "Gender");
+            
+        return array($fields, $actions, $required);
+    }
+
+
+    /**
+     * SignoutForm function.
+     * Uses an empty form to log out member
+     * 
+     * @return Object the signout form data (empty)
+     */
+    public function SignoutForm() {
+        // the fields
+        
+        // the form
+        $signoutForm =  new Form(
+            $this, "SignoutForm", 
+            // build one FieldList with the initial form fields
+            // http://doc.silverstripe.org/framework/en/reference/form-field-types
+            new FieldList(
+            
+                // List your fields here
+            
+            ), 
+            // one fieldlist holds the call to the form action (method)
+            // and the text on the signup button
+            new FieldList(
+            
+                // List the action buttons here
+                new FormAction("SignoutAction", "Logout")
+
+            ), 
+            // List the required fields here: "Email", "FirstName"
+            new RequiredFields(
+              
+            )
+        );
+
+        //fixme when I know why "session timed out" always appears
+        $signoutForm->disableSecurityToken();
+
+        return $signoutForm;
+    }
+    
+    /**
+     * SignoutAction function.
+     * This function is called when the user submits the $SignoutForm.
+     * All it does is sign the member out.
+     * 
+     * @return void
+     */
+    public function SignoutAction() {
+        $member = Member::currentUser();
+        if ($member) {
+            $member->logOut();
+            if(isset($_REQUEST['BackURL']) && $_REQUEST['BackURL']!=""){
+                $this->redirect($_REQUEST['BackURL']);
+            }else{
+                $this->redirect('/');   
+            }
+        }else{
+            if(isset($_REQUEST['BackURL']) && $_REQUEST['BackURL']!=""){
+                $this->redirect($_REQUEST['BackURL']);
+            }else{
+                $this->redirect('/');   
+            }
+        }
+    }
+
+    /**
+     * AccountExists function.
+     * This function is called on attempted registration to make sure that
+     * only one account is registered per email address.
+     *
+     * @param string $email - the email address given for registration
+     * @return bool
+     */
+    protected function AccountExists($email) {
+        $existingUser = Member::get()->filter('Email', "$email")->First();
+        $existingConsumer = CCL_PC_Model_Consumer::findByEmail($email);
+
+
+        if( !empty($existingUser) || !empty($existingConsumer) ) {
+            return true;
+        }
+
+        else {
+            return false;
+        }
+    }
+
+    /**
+     * UserIs18 function.
+     * This function is called on attempted registration to make sure that
+     * user is aged at least 18 according to entered date of birth.
+     *
+     * @param string $dob - the date of birth given for registration
+     * @return bool
+     */
+    protected function UserIs18($dob) {
+        $birthdate = new Zend_Date($dob);
+        $birthdate->add(18, Zend_Date::YEAR);
+        $today = new Zend_Date();
+
+        if ($today->isEarlier($birthdate)) {
+            return false;
+        }
+
+        else {
+            return true;
+        }
+    }
+
+    /**
+     * HandleSignupFailure function.
+     * This function is called when a validation check fails on the back end.
+     * 
+     * @param array $data - the request
+     * @param object $form  - the signup form data 
+     * @param string $message - the failure message to return in UI
+     * @return void
+     */
+    protected function HandleSignupFailure($data, $form, $message) {
+        $form->addErrorMessage("Message", $message, "bad");
+        
+        // Load errors into session and post back
+        Session::set(
+                     "FormInfo.RegistrationForm_RegistrationForm.data", 
+                     $data
+                     );
+        
+        // Redirect back to form
+        $this->redirect('/sign-up/');
+    }
+
+    /**
+     * SignupAction function.
+     * This function is called when the user submits the $SignupForm.
+     * 
+     * @param array $data - the request
+     * @param object $form  - the signup form data 
+     * @param $thanks - redirect to main thanks page if true
+     * @return consumer id
+     */
+    public function SignupAction($data, $form, $thanks=true, $regSource = "clorox.com") {
+
+        // ss method to prevent sql injection
+        $email = Convert::raw2sql($data['Email']); 
+        //error_log('General Signup Action hit');
+        // if the user already exists we need to throw an error
+        if( $this->AccountExists($email) ) {
+            $this->HandleSignupFailure($data, $form, "Sorry, that email address already exists. Please choose another.");
+            $this->redirectBack();
+        }
+
+        // the Silverstripe date form returns an array with named keys -- 
+        // cobble it into a form strtotime understands.
+        $dob = explode('/',trim($data['Birthday']));
+        $dob = $dob[2].'-'.$dob[0].'-'.$dob[1];
+        // if there's amnything wrong with DOB
+        // kick back to form
+        if(!$this->UserIs18($dob)){
+            $this->HandleSignupFailure($data, $form, "You must be 18 years of age to register.");
+            return 0;
+        }
+
+        $consumer = new CCL_PC_Model_Consumer();
+        $consumer->setFirstName($data['FirstName']);
+        $consumer->setLastName($data['Surname']);
+        $consumer->setRegPassword($data['Password']);
+        $consumer->setGender($data['Gender']);
+        $consumer->setEmailAddress($data['Email']);
+        $consumer->setTermsOfUse($data['TermsOfUse']);
+        $consumer->setPostalCode($data['Postcode']);
+        $consumer->setSource($regSource);
+        $consumer->setDob($dob);
+        $consumer_id = $this->CreateUser($consumer, $data, $form, $thanks);
+       
+        $validate = new ValidateUser($data['Email'],$data['Password']);
+        //check Member validation
+        $memberStatus = $validate->member();
+        // get $member object 
+        $this->_member = $validate->getMember();
+        $member = $validate->getMember();
+        if($member instanceof Member){
+            $this->_member->logIn();
+        }
+        if($consumer_id>1){
+            if(isset($_REQUEST['BackURL']) && !empty($_REQUEST['BackURL'])){
+                $this->redirect($_REQUEST['BackURL']);
+            }else if ($thanks) {
+                $this->redirect('/thank-you/');
+            }
+        }else{
+            
+           if($member instanceof Member){
+                $member->logIn();
+               $this->redirect('/thank-you/');
+            }
+            $form->addErrorMessage(
+                               "Message",
+                               "There was an error registering, please try again.",
+                               "bad"
+                               );
+           $this->redirect('/sign-up/');
+        }
+
+    }
+
+    /**
+     * FBSignupAction function.
+     * This function is called when the user submits the simpler $FBSignupForm.
+     * 
+     * @param array $data - the request
+     * @param object $form  - the signup form data 
+     * @param $thanks - redirect to main thanks page if true
+     * @return consumer id
+     */
+    public function FBSignupAction($data, $form, $thanks=true, $regSource = "clorox.com") {
+        // ss method to prevent sql injection
+        $email = Convert::raw2sql($data['Email']); 
+
+        // if the user already exists we need to throw an error
+        if( $this->AccountExists($email) ) {
+            $this->HandleSignupFailure($data, $form, "Sorry, that email address already exists. Please choose another.");
+            return 0;
+        }
+        
+        // the Silverstripe date form returns an array with named keys -- 
+        // cobble it into a form strtotime understands.
+        $dob = explode('/',trim($data['Birthday']));
+        $dob = $dob[2].'-'.$dob[0].'-'.$dob[1];
+        // if there's amnything wrong with DOB
+        // kick back to form
+        if(!$this->UserIs18($dob)){
+            $this->HandleSignupFailure($data, $form, "You must be 18 years of age to register.");
+            return 0;
+        }
+        
+        $consumer = new CCL_PC_Model_Consumer();
+        $consumer->setFirstName($data['FirstName']);
+        $consumer->setLastName($data['Surname']);
+        $consumer->setEmailAddress($data['Email']);
+        $consumer->setTermsOfUse($data['TermsOfUse']);
+        $consumer->setSource($regSource);
+        $consumer->setDob($dob);
+        // this is a terrible password hack, but we need to be able to calculate it
+        $fbPassword = substr(md5($data['externalIdentifier']), 0, 10);
+        $data['Password'] = $fbPassword;
+        
+        $consumer->setRegPassword($data['Password']);
+
+        return $this->CreateUser($consumer, $data, $form, $thanks);
+
+    }
+
+
+    /**
+     * CreateUser function.
+     * This function is called to actually create a new user and log it in.
+     * 
+     * @param CCL_PC_Model_Consumer - a new consumer
+     * @param array $data - the request
+     * @param object $form  - the signup form data 
+     * @param $thanks - redirect to main thanks page if true
+     * @return consumer id
+     */ 
+    protected function CreateUser($consumer, $data, $form, $thanks=true) {
+        // Get group for basic members. Can't continue if it doesn't exist.
+        $group = Group::get()->filter('Title', 'Basic Members')->First();
+        if ( !$group ) {
+            $this->HandleSignupFailure($data, $form, "Configuration error. The \"Basic Members\" group was not found.");
+            return 0;
+        }
+
+        // set up optional subscriptions
+        $subService = new CCL_PC_Service_Subscription();
+        
+        if (array_key_exists('Offers', $data)) {
+            /** setting the SUB_PROGRAMS type which will go into the pc_subscription table
+            *   
+            *  Define Location: /config/defines.php
+            *   Function Location: /Library/../SiteFramework/3.2.x/code/CCL/PC/Model/Subscription.php
+            *   Function Define: 
+            *       public function setSubscription( 
+            *       $type, 
+            *       $value, 
+            *       $channel = CCL_PC_Model_Subscription::CHANNEL_EMAIL, 
+            *       $force=false, 
+            *       $channelId = null
+            *       ) 
+            *
+            *
+            *   $type: String       program opt-in name that matches an element in the CSV of SUB_PROGRAMS
+            *   $value: Boolean     true or false that the user is opted in
+            *   $force: Boolean     true or false that we should opt the user in even if there isn't a match
+            *
+            *
+            *   notation author:  Kody Smith -at- clorox.com
+             */
+            
+                
+            $type='CL_BRAND';   //changing Offers to CL_Brand to be the proper notation
+            $value=$data['Offers'];
+            $consumer->setSubscription( $type, $value);
+
+            //$consumer->setBrandOptIn($data['Offers']);
+        }
+        
+        // create SS Member with Clorox-compatible 'ccl' hashing algorithm
+        Security::set_password_encryption_algorithm('ccl');
+
+        $cService = new CCL_PC_Service_Consumer();
+        
+        $cService->consumerCreate($consumer);
+        $response = $cService->getResponse();
+        if (CCL_PC_Service_Abstract::SUCCESS != $response->getStatus()) {
+            $this->HandleSignupFailure($data, $form, $response->getMessage());
+            return 0;
+        }
+
+        //CWF_Auth::processLoginCore($data['Email'], $data['Password']);
+
+        // Create a new Member object and load the form data into it
+        $member = new Member();
+        $form->saveInto($member);
+
+        // set pc_consumer_id to match pc_consumer id
+        // reuse exact salt from new Consumer -- else PW hashes won't match
+        $updates = array('Salt' => $consumer->getSalt(),
+                         'pc_consumer_id' => $consumer->getId());
+        $member->castedUpdate($updates);
+        
+        // Write member to the database.  This needs to happen before we add 
+        // it to a group
+        if($member instanceof Member){
+            $this->_member = $member;    
+            $member->write();
+            $member->Groups()->add($group);
+            
+        }else{
+            error_log('member object not set');
+        }
+
+
+        // WE COULD: Redirect to a page thanking people for registering
+        //Director::redirect('thanks-for-registering/');
+        
+        // OR: redirect back to the main page,
+        // and simply add a thank you message.
+        $form->addErrorMessage(
+                               "Message",
+                               "Thank you for registering.",
+                               "good"
+                               );
+            
+        return $consumer->getId();
+    }
+    
+    
+    /**
+     * facebookLogin function
+     * This method has to be able to deal with two main cases:
+     * registered or unregistered users trying to log in via FB.
+     * 
+     * @return void 
+     */
+    public function facebookLogin(){
+        // TODO: if nothing is on the request we should
+        // probably throw an error
+        if ( isset($_REQUEST) ) {
+
+            // what we expect from FB
+            $fbData = array(
+                'Email','FirstName',
+                'Surname', 'externalUsername',
+                'Birthday', 'Password',
+                'externalIdentifier','signedRequest'
+                );
+            
+            // map only these onto a new array  
+            foreach( $_REQUEST as $key=>$value ){
+                if( in_array( $key, $fbData )){
+                    $requestData[$key] = convert::raw2sql($_REQUEST[$key]);   
+                }
+            }
+
+            // if the user already exists in PC we probably 
+            // should just log them in 
+            if( $existingConsumer = CCL_PC_Model_Consumer::findByEmail($requestData['Email']) ) {
+                
+                // if there is a consumer already we need to see if
+                // there is already a facebook external user
+                $fbExternal = $existingConsumer->getExternalUserModel(
+                CCL_PC_Model_ExternalUser::FACEBOOK_USER);
+                // if not, this needs to be created and
+                // the consumer saved before we move on  
+                if ( !$fbExternal ) {
+                    $this->createExternalFBUser(
+                        $existingConsumer,
+                        $requestData['externalUsername'],
+                        $requestData['externalIdentifier']
+                    );
+                }
+                // facebook user password hack
+                $requestData['Password'] = substr(md5($requestData['externalIdentifier']), 0, 10);
+                
+                $this->facebookLoginAction($requestData);
+                
+                // if we get to this point login is 
+                // successful so let the front-end know 
+                exit(CCL_API::sendResponse(200, "success"));
+            
+            // if they only exist on the SS Member model
+            // we should throw an error
+            }else if($existingUser = Member::get()->filter('Email', $requestData['Email'])->First()){
+            
+                exit(CCL_API::sendResponse(200, "only ss user exists"));
+                
+            // otherwise send a response back to parse in js if
+            // this is a registration rather than a login   
+            }else{
+
+                // this is a terrible password hack, but we need to be able to calculate it
+                $fbPassword = substr(md5($requestData['externalIdentifier']), 0, 10);
+                $requestData['Password'] = $fbPassword;
+                $data = json_encode($requestData);
+                exit(CCL_API::sendResponse(200, "register new", $requestData));
+
+            }
+        } 
+
+    }
+    
+    
+    /**
+     * createExternalFBUser function
+     * Takes a consumer object an external username 
+     * and the external identifier and uses this to
+     * add an external user record to the consumer
+     * 
+     * @param CCL_PC_Model_Consumer $consumer
+     * @param string $externalUsername
+     * @param string $externalIdentifier
+     * 
+     * @return void 
+     */
+    public function createExternalFBUser($consumer,
+                                         $externalUsername,
+                                         $externalIdentifier){
+
+        $externalUser = new CCL_PC_Model_ExternalUser();
+        $externalUser->setExternalUserType( CCL_PC_Model_ExternalUser::FACEBOOK_USER );
+        $externalUser->setExternalUsername( $externalUsername );
+        $externalUser->setExternalIdentifier( $externalIdentifier );
+        $consumer->addExternalUserModel( $externalUser );
+        // save the consumer with this added data 
+        $consumer->save();
+        
+        CCL_Log::write(__METHOD__, 'Added external Facebook User');
+    }
+    
+    /**
+     * facebookLoginAction function.
+     * This function is called from facebookLogin. This differs from the
+     * method in LoginForm_Controller in that there is no "form" data 
+     * sent back to the template. The user is simultaneously logged in as a
+     * SS Member and PC Consumer.
+     * 
+     * @param array $data - the request
+     * @return void
+     */
+    public function facebookLoginAction($data) {
+        // validate ordinary users with Clorox-specific password hashing
+        Security::set_password_encryption_algorithm('ccl');
+        
+        // ss method to prevent sql injection
+        $email = Convert::raw2sql($data['Email']); 
+
+        // check to see if the user exists
+        $consumer = CCL_PC_Model_Consumer::findByEmail($email);
+        if (!empty($consumer)) {
+            $user = Member::get()->filter('pc_consumer_id', $consumer->getId())->First();
+        } else {
+            $user = null;
+        }
+
+        // if the user doesn't exist we need to throw an error
+        $userOk = false;
+        if( !empty($user) ) {
+            $userOk = true;
+            // make sure that SS Member is synced to master data from
+            // PC Consumer
+            UserCommon::UpdateUser($consumer, $user);
+        }
+    
+
+        // if there was a PC Consumer but no SS Member, copy into Member
+        if (!$userOk && !empty($consumer)) {
+            $user = UserCommon::CloneUser($consumer, $data['Password']);
+
+        }
+        
+        if (!$userOk && empty($user)) {
+            
+            // Load errors into session and post back
+            Session::set(
+                         "FormInfo.LoginForm_LoginForm.data", 
+                         $data
+                         );
+            
+            // Redirect back to form
+            $this->redirectBack();
+            return;
+        }
+
+       // CWF_Auth::processLoginNopass($data['Email']);
+        $user->logIn($remember=true);
+        
+        if(isset($_REQUEST['BackURL']) && !empty($_REQUEST['BackURL'])){
+            $this->redirect($_REQUEST['BackURL']);
+        }else{
+            $this->redirect('/');
+        }
+           
+        return;
+    }
+    
+    /**
+
+     * Marketing decided there should be a new opt-in box for Clorox Classrooms Info on registration:
+
+     *   BRAND = Clorox
+
+    * @param PC_Model_Consumer $user The user to save info for
+    
+    */
+    
+}

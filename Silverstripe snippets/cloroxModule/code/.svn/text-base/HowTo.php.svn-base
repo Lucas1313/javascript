@@ -1,0 +1,21 @@
+<?php
+/*
+ * Class HowTo
+ *
+ * Describes the Model for a HowTo 
+ * @author Luc Martin lmartin -at- clorox.com
+ * @version $Id$
+ *
+ * Relationships:
+ *
+ * 
+ *
+ */
+class HowTo extends DataObject {
+    static $db = array(
+        'Name' => 'Text',
+        'Title' => 'Text',
+        'Description' => 'Text'
+    );
+    static $belong_many_many = array('SingleProductPage' => 'SingleProductPage');
+}
