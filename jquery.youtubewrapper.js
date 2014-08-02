@@ -12,6 +12,7 @@
  * Purpose: to listen to a list of buttons or thumbnails
  * and play on click the video that is set in a html5 data element (data-youtubeid)
  *
+ *
  * Instructions:
  * 1- Build a list of html objects, buttons, thumbsnails or <a> tags
  * 2- by default the plugin will grab the parameter data-youtubeid="[video to play]"
@@ -27,14 +28,13 @@
 			// Here we go...
 
 			$('.playVideo').youtubewrapper({
-				targetId : 'videoPlayer',   // the id of the div where the video will play
-				height : videoHeight,       // height
-				width : videoWidth,         // width
-				videoId : 'data-videoid',   // The html-5 tag that will contain the video ID
-				wmode : 'transparent',
-				modestbranding : 1,         // if set to 1 will hide the big Youtube Icon
-				rel : 0,                    // Values: 0 or 1. Default is 1. indicates whether the player should show related videos when playback ends.
-				showinfo : 0,               // Values: 0 or 1. Default is 1 showinfo and playlist
+				targetId : 'videoPlayer',  	// the id of the div where the video will play
+				height : videoHeight, 		// height
+				width : videoWidth, 		// width
+				videoId : 'data-videoid', 	// The html-5 tag that will contain the video ID
+				modestbranding : 1, 		// if set to 1 will hide the big Youtube Icon
+				rel : 0, 					// Values: 0 or 1. Default is 1. indicates whether the player should show related videos when playback ends.
+				showinfo : 0, 				// Values: 0 or 1. Default is 1 showinfo and playlist
 				dataLayerEventName : 'Clorox Video click event',  // Google tagging
 				events : {
 					'onStateChange' :
@@ -62,17 +62,6 @@
 			});
  */
 
-
-var youtubeInterval = setInterval(function(){
-
-	onYouTubeIframeAPIReady2();
-
-	if(youtubeVariables.actualPlayer.status == 'Playing'){
-
-		clearInterval(youtubeInterval);
-	}
-},2000);
-
 /**
  * function onYouTubeIframeAPIReady
  * Triggered by Youtube API on load
@@ -86,14 +75,12 @@ var youtubeVariables = {
 	triggerId : '',
 	triggerClass : ''
 }
-var player;
 
-function onYouTubeIframeAPIReady2() {
 
-	if(youtubeVariables.youtubeIsReady == false){
-		$(window).trigger('goYoutubePlugin');
-
-	}
+function onYouTubeIframeAPIReady() {
+	$(window).trigger('goYoutubePlugin');
+	youtubeVariables.youtubeIsReady = true;
+	youtubeVariables.actualPlayer.status = 'Standby'
 }
 
 /**
@@ -119,8 +106,8 @@ function onYouTubeIframeAPIReady2() {
 		$('script').each(function() {
 
 			if ($(this).attr('src')) {
-				//////console.log($(this).attr('src'))
-				found = $(this).attr('src').match(src);
+				////console.log($(this).attr('src'))
+				fund = $(this).attr('src').match(src);
 			}
 
 		});
@@ -128,12 +115,13 @@ function onYouTubeIframeAPIReady2() {
 		//consolidate the 'this' for the root object
 		// set the defaults
 		var base = this, defaults = {
+			wmode : 'transparent',
 			targetId : 'video',
 			autoplay : 0,
 			height : 244,
 			width : 427,
 			videoId : 'data-videoid',
-			wmode : 'transparent',
+			'preloadVideoId':null,
 			modestbranding : 1,
 			rel : 0,
 			showinfo : 0,
@@ -161,7 +149,7 @@ function onYouTubeIframeAPIReady2() {
 
 		//Iterate trough all elements set by the plugin
 		return this.each(function() {
-			////console.log('iteration from youtube wrapper')
+
 			youtubeVariables.triggerClass = $(this).attr('class');
 			setId(this);
 			setListeners(this, defaults);
@@ -171,15 +159,13 @@ function onYouTubeIframeAPIReady2() {
 		/**
 		 * function setId
 		 * Definition will set an Id on the target if there is none
-		 * @param {Object} target
+ 		 * @param {Object} target
 		 */
 		function setId(target){
-
 			if(! $(target).attr('id')){
 				++youtubeVariables.youtubeIterator;
 				$(target).attr('id', 'jQueryYoutube'+youtubeVariables.youtubeIterator);
 			}
-			////console.log('setting id '+youtubeVariables.youtubeIterator)
 		}
 
 		/**
@@ -191,14 +177,13 @@ function onYouTubeIframeAPIReady2() {
 		function setListeners(obj, args) {
 
 			id = $(obj).attr('id');
+            //console.log('handling listeners '+id);
+			$('body').on('click', '#' + id, function() {
+				console.log('Click')
 
-			$('body').on('click','#' + id,function() {
-				//console.info('Clicked on youtube Trigger '+id)
-				args.autoplay = 1;
-				 debugger;
 				if($(this).attr('data-playerid')){
 					args.targetId = $(this).attr('data-playerid');
-					////console.info($(this).attr('data-playerid'));
+					//console.info($(this).attr('data-playerid'));
 				}
 
 				if($(this).attr('data-preimage')){
@@ -217,12 +202,11 @@ function onYouTubeIframeAPIReady2() {
 				}
 
 				var eventTarget = this;
-
 				// Hiding will fix IE 8 black screen bug
 				$('#' + defaults.targetId).hide();
-////console.info('defaults.targetId='+defaults.targetId);
 				var newVideoFrame = '<div id="' + defaults.targetId + '"></div>';
 				$('#' + defaults.targetId).replaceWith(newVideoFrame);
+				args.autoplay = 1;
 				setEvents(this, args);
 				args.afterClick(eventTarget, args);
 				youtubeVariables.triggerId = $(this).attr('id');
@@ -238,19 +222,21 @@ function onYouTubeIframeAPIReady2() {
 		 */
 		function setEvents(caller, args) {
 
+			var args = args;
 			if (!youtubeVariables.youtubeIsReady) {
 
-				//console.info('BINDING youtube EVENTS')
+				//////console.info('BINDING EVENTS')
 
 				$(window).bind('goYoutubePlugin', function(e) {
-					//console.info('goYoutubePlugin EVENTS')
+
 					executeOnReadyCallBacks(args);
 					setVideoPlayer(null,args);
-					youtubeVariables.youtubeIsReady = true;
+
 				});
 
 			}
 			else {
+				////console.info('already set running')
 				setVideoPlayer($(caller).attr(args.videoId),args);
 			}
 		}
@@ -258,7 +244,7 @@ function onYouTubeIframeAPIReady2() {
 		/**
 		 * function executeOnReadyCallBacks(args)
 		 * User defined callback events
-		 * @param {Object} args
+ 		 * @param {Object} args
 		 */
 		function executeOnReadyCallBacks(args){
 			if(args.events && args.events.onReady){
@@ -278,21 +264,23 @@ function onYouTubeIframeAPIReady2() {
 		 * @param {Object} args
 		 */
 		function setVideoPlayer(videoId,args) {
-			////console.info('video id is '+videoId)
+			////console.info(videoId)
 			// get the video id
 
 			if (!videoId ) {
-				videoId = $(base).first().attr(args.videoId);
+			    if(args.preloadVideoId){
+			        console.log('args.preloadVideoId is '+args.preloadVideoId)
+			        videoId = args.preloadVideoId;
+			    }else{
+				    videoId = $(base).first().attr(args.videoId);
+				}
 			}
 			youtubeVariables.actualPlayer.playingVideoId = videoId;
 			youtubeVariables.actualPlayer.id = args.targetId;
 			////console.info('PLAYING '+videoId)
 			// setup the player
-			if(typeof YT == 'undefined'){
-				return;
-			}
 			youtubeVariables.player = new YT.Player(args.targetId, // the player
-				{
+			{
 					height : args.height, // video height
 					width : args.width, // video width
 					videoId : videoId, // the youtube ID
@@ -304,15 +292,12 @@ function onYouTubeIframeAPIReady2() {
 						autoplay : args.autoplay
 					},
 					events : {
-					'onStateChange' : function(e){ // triggered whenever the player plays, stops pause etc
-
-						onPlayerStateChange(e,args) // Plugin
-						if(args.events.onStateChange) {
+						'onStateChange' : function(e){ // triggered whenever the player plays, stops pause etc
+							//console.info('Player change')
+							onPlayerStateChange(e,args) // Plugin
 							args.events.onStateChange(e,args); // User defined callback
 						}
-					},
-					'onReady': onPlayerReady,
-				}
+					}
 			});
 
 			// Ready state
@@ -325,7 +310,7 @@ function onYouTubeIframeAPIReady2() {
 		/**
 		 * function onPlayerStateChange
 		 * Description: Respond to the player state change event
-		 * @param {Object} event
+ 		 * @param {Object} event
 		 */
 		function onPlayerStateChange(event) {
 			if(!event){
@@ -343,15 +328,12 @@ function onYouTubeIframeAPIReady2() {
 
 				done = true;
 			} else if (event.data == YT.PlayerState.ENDED) {
-				//console.log('VIDEO ENDED '+args.postImage+'  '+$(args.postImage).length)
 				// video is over test if there is a post image to show
 				if ($(args.postImage).length > 0) {
-					//console.log('showing post image')
 					$(args.postImage).fadeIn(1000);
 					$(args.dialogId).dialog("destroy");
 				}
 			}
-			// Event in plain english
 
 			switch(event.data){
 				case -1:
@@ -378,11 +360,6 @@ function onYouTubeIframeAPIReady2() {
 
 		}
 
-		function onPlayerReady(event){
-			//console.log('PLAYER IS READY ')
-			player = event.target;
-
-		}
 		/**
 		 * function addTag
 		 * Description: If the youtube api script is not loaded, loads it. if it is already loaded
@@ -390,18 +367,15 @@ function onYouTubeIframeAPIReady2() {
 		 */
 
 		function addTag() {
-			//console.info('youtubeVariables  '+youtubeVariables.youtubeIsReady);
 			if (!youtubeVariables.youtubeIsReady) {
-				//console.info('ADDING YOUTUBE TAGS ')
 				$.getScript(src, function(){
-					found = true;
+					fund = true;
 				})
 				var tag = document.createElement('script');
 				tag.src = src;
 				var firstScriptTag = document.getElementsByTagName('script')[0];
 				firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 			}else{
-
 				//$(window).trigger('goYoutubePlugin');
 			}
 		}
